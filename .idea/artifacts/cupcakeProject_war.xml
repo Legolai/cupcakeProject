@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="cupcakeProject:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>cupcakeProject</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="cupcakeProject-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="cupcakeProject:war exploded" />
+    </root>
+  </artifact>
+</component>
