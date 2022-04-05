@@ -1,40 +1,37 @@
 package dk.cphbusiness.dat.cupcakeproject.model.entities;
 
-import java.util.Objects;
-
 public class User
 {
-    private String username;
+    private String name;
+    private String email;
+    private String phone;
     private String password;
-    private String role;
+    private Role role;
+    private String address;
+    private Account account;
 
-    public User(String username, String password, String role)
+    public User(String name, String email, String password, Role role)
     {
-        this.username = username;
+        this.name = name;
+        this.email = email;
         this.password = password;
         this.role = role;
+        this.account = new Account(0);
     }
 
-
-
-    @Override
-    public String toString()
+    public String getName()
     {
-        return "User{" +
-                "brugerNavn='" + username + '\'' +
-                ", kodeord='" + password + '\'' +
-                ", rolle='" + role + '\'' +
-                '}';
+        return name;
     }
 
-    public String getUsername()
+    public String getEmail()
     {
-        return username;
+        return email;
     }
 
-    public void setUsername(String username)
+    public String getPhone()
     {
-        this.username = username;
+        return phone;
     }
 
     public String getPassword()
@@ -42,34 +39,48 @@ public class User
         return password;
     }
 
+    public Role getRole()
+    {
+        return role;
+    }
+
+    public String getAddress()
+    {
+        return address;
+    }
+
+    public Account getAccount()
+    {
+        return account;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public void setPhone(String phone)
+    {
+        this.phone = phone;
+    }
+
     public void setPassword(String password)
     {
         this.password = password;
     }
 
-    public String getRole()
-    {
-        return role;
-    }
-
-    public void setRole(String role)
+    public void setRole(Role role)
     {
         this.role = role;
     }
 
-    @Override
-    public boolean equals(Object o)
+    public void setAddress(String address)
     {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getUsername().equals(user.getUsername()) && getPassword().equals(user.getPassword()) &&
-                getRole().equals(user.getRole());
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(getUsername(), getPassword(), getRole());
+        this.address = address;
     }
 }

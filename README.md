@@ -4,6 +4,7 @@
 Sammen - Setup af startkode til github repo og første version af database samt E/R diagram.
 
 **Tirsdag den 6. april 2022**: \
+Sammen - Mockup i figma og begyndelse på java kode i form af entities på baggrund E/R diagram for databasen.
 
 ## Baggrund
 Vi har landet en vigtig opgave fra Olsker Cupcakes. Det er endnu et dybdeøkologisk iværksættereventyr fra Bornholm, som har ramt den helt rigtige opskrift. Et par hipstere fra København har været forbi bageriet, og indsamlet nogle krav og lavet en halvfærdig mockup af en tænkt forside. En mockup er en meget løs skitse, som viser hvordan det færdige website skal se ud. Det er selvfølgelig ikke alt som er med, og som er tænkt igennem, så det er vores opgave at stille spørgsmål til manglende funktionalitet, komme med forslag osv.
