@@ -6,8 +6,13 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.util.List;
 
-public class OrderMapper implements IOrderMapper
+public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 {
+    public OrderMapper(ConnectionPool connectionPool)
+    {
+        super(connectionPool);
+    }
+
     @Override
     public DBEntity<Order> insert(Order order) throws DatabaseException
     {

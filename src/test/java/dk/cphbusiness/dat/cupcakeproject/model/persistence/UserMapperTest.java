@@ -1,64 +1,33 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class UserMapperTest
+class UserMapperTest extends DataMapperTest<User>
 {
-    private final static String USER = "root";
-    private final static String PASSWORD = "root";
-    private final static String URL = "jdbc:mysql://localhost:3306/startcode_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
-
-    private static ConnectionPool connectionPool;
     private static UserMapper userMapper;
+
 
     @BeforeAll
     public static void setUpClass() {
-        connectionPool = new ConnectionPool(USER, PASSWORD, URL);
+        DataMapperTest.setUpClass();
         userMapper = new UserMapper(connectionPool);
     }
 
-    @BeforeEach
-    void setUp()
-    {
-        try (Connection testConnection = connectionPool.getConnection()) {
-            try (Statement stmt = testConnection.createStatement() ) {
-                // Remove all rows from all tables
-                stmt.execute("delete from user");
-                // Indsæt et par brugere
-                stmt.execute("insert into user (username, password, role) " +
-                        "values ('user','1234','user'),('admin','1234','admin'), ('ben','1234','user')");
-            }
-        } catch (SQLException throwables) {
-            System.out.println(throwables.getMessage());
-            fail("Database connection failed");
-        }
-    }
-
-    @Test
-    void testConnection() throws SQLException
-    {
-        Connection connection = connectionPool.getConnection();
-        assertNotNull(connection);
-        if (connection != null)
-        {
-            connection.close();
-        }
-    }
 
     @Test
     void login() throws DatabaseException
     {
-        User expectedUser = new User("user","1234","user");
+        User expectedUser = new User("user","1234","user", Role.CUSTOMER);
         User actualUser = userMapper.login("user","1234");
         assertEquals(expectedUser, actualUser);
     }
@@ -76,13 +45,25 @@ class UserMapperTest
     }
 
     @Test
-    void createUser() throws DatabaseException
+    void login2() throws DatabaseException
     {
-        User newUser = userMapper.createUser("jill", "1234", "user");
+        DBEntity<User> newUser = userMapper.insert(new User("jill", "1234", "user", Role.CUSTOMER));
         User logInUser = userMapper.login("jill","1234");
-        User expectedUser = new User("jill", "1234", "user");
-        assertEquals(expectedUser, newUser);
+        User expectedUser = new User("jill", "1234", "user", Role.CUSTOMER);
+        assertEquals(expectedUser, newUser.getEntity());
         assertEquals(expectedUser, logInUser);
 
+    }
+
+    @Override
+    public IDataMapper<User> getDataMapper()
+    {
+        return userMapper;
+    }
+
+    @Override
+    public List<User> createListOfEntities()
+    {
+        return null;
     }
 }

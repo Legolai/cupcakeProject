@@ -1,8 +1,6 @@
 
 ‚
 Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/config/ApplicationStart.java,3/f/3f1f201e21f7c8d57cea20b85384cb17a21ed35b
-r
-Bsrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Login.java,1/f/1f29f7d0b2aac5c794ff33dc8a8aa71301c8f99b
 B
 cupcakeProject.iml,e/1/e1548ab30da3e14443d66092126b27bd18733a69
 t
@@ -55,3 +53,22 @@ I
 src/main/webapp/index.jsp,8/e/8e6d3b70c9f5b02570779b0441540d45eceb0ded
 ]
 -src/main/webapp/WEB-INF/tags/pagetemplate.tag,1/7/17918a5675a8e4c47a3d9e44be9f870a33d0ef70
+‡
+Wsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/exceptions/DatabaseException.java,a/f/afb038941a451aa74409771054ef26f10fc5cb28
+s
+Csrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Logout.java,3/6/3649aaa00a37be9f1a80b57b031e9253eee6f696
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+‚
+Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/services/Authentication.java,a/7/a703f53f36dc3702f95cab5e2bf019edc5824f77
+
+Osrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/OrderDetail.java,a/c/aca1a69e8e113f9dcb1f1be9b500fa6984a9adb8
+„
+Tsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/CupcakeComponent.java,d/8/d8c039a8b40aaf4a0783ba7c0e961b06e31747fa
+x
+Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Role.java,5/4/54c375020ad6ed644bb769e8c02d9315a90ae200
+x
+Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/User.java,a/4/a4b366c29021b0e0c10af958f6bb92e86059eab1
+y
+Isrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Order.java,7/7/7760cd56a63c649292e481d00756a06cb4375497

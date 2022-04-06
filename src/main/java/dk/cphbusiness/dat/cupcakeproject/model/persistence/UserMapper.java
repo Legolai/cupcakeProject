@@ -6,8 +6,14 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.util.List;
 
-public class UserMapper implements IUserMapper
+public class UserMapper extends DataMapper<User> implements IUserMapper
 {
+
+
+    public UserMapper(ConnectionPool connectionPool)
+    {
+        super(connectionPool);
+    }
 
     @Override
     public DBEntity<User> insert(User user) throws DatabaseException
