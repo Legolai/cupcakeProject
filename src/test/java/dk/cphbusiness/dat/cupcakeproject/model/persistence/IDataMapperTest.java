@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 interface IDataMapperTest<T>
 {
@@ -20,7 +20,7 @@ interface IDataMapperTest<T>
     {
         IDataMapper<T> dataMapper = getDataMapper();
         T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(1, t);
+        DBEntity<T> dbEntity = new DBEntity<>(4, t);
         assertEquals(dbEntity, dataMapper.insert(t));
     }
 
@@ -28,18 +28,20 @@ interface IDataMapperTest<T>
     default void getAll() throws DatabaseException
     {
         IDataMapper<T> dataMapper = getDataMapper();
-        T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(1, t);
-        assertEquals(dbEntity, dataMapper.insert(t));
+        assertEquals(3, dataMapper.getAll().size());
+        assertEquals(4, dataMapper.insert(createListOfEntities().get(2)).getId());
+        assertEquals(3, dataMapper.getAll().size());
     }
 
     @Test
     default void findById() throws DatabaseException
     {
         IDataMapper<T> dataMapper = getDataMapper();
-        T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(1, t);
-        assertEquals(dbEntity, dataMapper.insert(t));
+        T t = createListOfEntities().get(3);
+        DBEntity<T> dbEntity = new DBEntity<>(4, t);
+        assertTrue(dataMapper.findById(1).isPresent());
+        assertEquals(dbEntity,  dataMapper.insert(t));
+        assertTrue(dataMapper.findById(dbEntity.getId()).isPresent());
     }
 
     @Test
@@ -47,19 +49,35 @@ interface IDataMapperTest<T>
     {
         IDataMapper<T> dataMapper = getDataMapper();
         T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(1, t);
-        assertEquals(dbEntity, dataMapper.insert(t));
+        DBEntity<T> dbEntity = dataMapper.insert(t);
+        dbEntity.setDeleted(true);
+        assertTrue(dataMapper.update(dbEntity));
     }
 
     @Test
     default void delete() throws DatabaseException
     {
         IDataMapper<T> dataMapper = getDataMapper();
-        T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(1, t);
+        T t = createListOfEntities().get(3);
+        DBEntity<T> dbEntity = new DBEntity<>(4, t);
         assertEquals(dbEntity, dataMapper.insert(t));
+        assertTrue(dataMapper.delete(dbEntity));
+        assertFalse(dataMapper.findById(dbEntity.getId()).isPresent());
     }
 
+    @Test
+    default void allInOne() throws DatabaseException
+    {
+        IDataMapper<T> dataMapper = getDataMapper();
+        T t = createListOfEntities().get(2);
+        DBEntity<T> dbEntity = new DBEntity<>(4, t);
+        assertEquals(dbEntity, dataMapper.insert(t));
+        dbEntity.setDeleted(true);
+        assertTrue(dataMapper.findById(dbEntity.getId()).isPresent());
+        assertTrue(dataMapper.update(dbEntity));
+        assertTrue(dataMapper.delete(dbEntity));
+        assertFalse(dataMapper.findById(dbEntity.getId()).isPresent());
+    }
 
 
 }

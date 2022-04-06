@@ -165,3 +165,5 @@ Temporary Items
 
 /.idea/sonarlint/
 
+/src/*/resources/app.properties
+

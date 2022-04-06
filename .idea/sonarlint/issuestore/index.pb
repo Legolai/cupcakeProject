@@ -1,8 +1,4 @@
 
-‚
-Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/config/ApplicationStart.java,3/f/3f1f201e21f7c8d57cea20b85384cb17a21ed35b
-B
-cupcakeProject.iml,e/1/e1548ab30da3e14443d66092126b27bd18733a69
 t
 D.idea/libraries/Maven__org_junit_jupiter_junit_jupiter_api_5_8_1.xml,b/3/b381eacf50d7dd4d801526eee698668bc5ceb20f
 z
@@ -25,8 +21,6 @@ m
 =.idea/libraries/Maven__ch_qos_logback_logback_core_1_2_11.xml,5/e/5ed1c00bded3571f661e3c3911c0cbe44c07eeb9
 p
 @.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_11.xml,8/c/8ccbb9388e386e6f3944c782e3d5a9dd5c13aeae
-7
-pom.xml,4/4/442292b8a7efeabbe4cc176709b833b1792140ec
 l
 <.idea/libraries/Maven__mysql_mysql_connector_java_8_0_28.xml,8/c/8c8f7564cfc9443dbe68e938928440aa764cdf28
 O
@@ -57,9 +51,6 @@ I
 Wsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/exceptions/DatabaseException.java,a/f/afb038941a451aa74409771054ef26f10fc5cb28
 s
 Csrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Logout.java,3/6/3649aaa00a37be9f1a80b57b031e9253eee6f696
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
 ‚
 Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/services/Authentication.java,a/7/a703f53f36dc3702f95cab5e2bf019edc5824f77
 

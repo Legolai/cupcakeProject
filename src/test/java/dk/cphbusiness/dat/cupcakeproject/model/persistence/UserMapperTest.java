@@ -16,7 +16,6 @@ class UserMapperTest extends DataMapperTest<User>
 {
     private static UserMapper userMapper;
 
-
     @BeforeAll
     public static void setUpClass() {
         DataMapperTest.setUpClass();

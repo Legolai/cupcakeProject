@@ -13,16 +13,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class DataMapperTest<T> implements IDataMapperTest<T>
 {
-    protected final static String USER = "root";
-    protected final static String PASSWORD = "root";
-    protected final static String URL = "jdbc:mysql://localhost:3306/startcode_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
-
     protected static ConnectionPool connectionPool;
 
 
     @BeforeAll
     public static void setUpClass() {
-        connectionPool = new ConnectionPool(USER, PASSWORD, URL);
+        connectionPool = new ConnectionPool(DBType.TEST);
     }
 
     @BeforeEach
