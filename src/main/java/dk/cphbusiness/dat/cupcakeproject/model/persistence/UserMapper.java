@@ -1,12 +1,13 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Account;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
@@ -28,7 +29,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
 
         DBEntity<User> dbUser;
 
-        String sql = "insert into user (name, email, phone, password, role, address, balance) values (?,?,?,?,?,?,?)";
+        String sql = "insert into `user` (name, email, phone, password, role, address, balance) values (?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
