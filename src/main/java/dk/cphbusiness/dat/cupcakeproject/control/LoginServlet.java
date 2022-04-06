@@ -17,7 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(name = "login", urlPatterns = {"/login"} )
-public class Login extends HttpServlet
+public class LoginServlet extends HttpServlet
 {
     private ConnectionPool connectionPool;
 

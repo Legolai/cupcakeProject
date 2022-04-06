@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet(name = "logout", urlPatterns = {"/logout"} )
-public class Logout extends HttpServlet
+public class LogoutServlet extends HttpServlet
 {
     private ConnectionPool connectionPool;
 

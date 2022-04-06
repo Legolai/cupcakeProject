@@ -18,6 +18,7 @@ public class ConnectionPool
     private static String PASSWORD = "root";
     private static String URL = "jdbc:mysql://localhost:3306/%s";
 
+
     public ConnectionPool()
     {
         this(USER, PASSWORD, URL);

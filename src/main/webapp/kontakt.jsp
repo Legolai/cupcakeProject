@@ -6,24 +6,17 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-            Login
+            Kontakt
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-            Login
+            Kontakt
     </jsp:attribute>
 
     <jsp:body>
 
-        <h3>You can log in here</h3>
+        <h3>Du kan kontakte os over tlf. xxxxxxxxx</h3>
 
-        <form action="login" method="post">
-            <label for="username">Username: </label>
-            <input type="text" id="username" name="username"/>
-            <label for="password">Password: </label>
-            <input type="password" id="password" name="password"/>
-            <input type="submit"  value="Log in"/>
-        </form>
 
     </jsp:body>
 </t:pagetemplate>

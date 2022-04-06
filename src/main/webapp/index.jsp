@@ -5,7 +5,7 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the frontpage
+         Olsker cupcakes
     </jsp:attribute>
 
     <jsp:attribute name="footer">
