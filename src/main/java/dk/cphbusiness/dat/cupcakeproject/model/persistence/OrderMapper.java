@@ -5,9 +5,15 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.util.List;
+import java.util.Optional;
 
-public class OrderMapper implements IOrderMapper
+public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 {
+    public OrderMapper(ConnectionPool connectionPool)
+    {
+        super(connectionPool);
+    }
+
     @Override
     public DBEntity<Order> insert(Order order) throws DatabaseException
     {
@@ -21,9 +27,9 @@ public class OrderMapper implements IOrderMapper
     }
 
     @Override
-    public DBEntity<Order> findById(int id) throws DatabaseException
+    public Optional<DBEntity<Order>> findById(int id) throws DatabaseException
     {
-        return null;
+        return Optional.empty();
     }
 
     @Override

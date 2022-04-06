@@ -5,9 +5,16 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.util.List;
+import java.util.Optional;
 
-public class UserMapper implements IUserMapper
+public class UserMapper extends DataMapper<User> implements IUserMapper
 {
+
+
+    public UserMapper(ConnectionPool connectionPool)
+    {
+        super(connectionPool);
+    }
 
     @Override
     public DBEntity<User> insert(User user) throws DatabaseException
@@ -22,9 +29,9 @@ public class UserMapper implements IUserMapper
     }
 
     @Override
-    public DBEntity<User> findById(int id) throws DatabaseException
+    public Optional<DBEntity<User>> findById(int id) throws DatabaseException
     {
-        return null;
+        return Optional.empty();
     }
 
     @Override

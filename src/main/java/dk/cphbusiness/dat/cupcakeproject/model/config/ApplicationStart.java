@@ -1,6 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.model.config;
 
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
+import dk.cphbusiness.dat.cupcakeproject.model.persistence.DBType;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,7 +30,7 @@ public class ApplicationStart implements ServletContextListener
         try
         {
             Class.forName("org.slf4j.impl.StaticLoggerBinder");
-            connectionPool = new ConnectionPool();
+            connectionPool = new ConnectionPool(DBType.APPLICATION);
         }
         catch (ClassNotFoundException e)
         {

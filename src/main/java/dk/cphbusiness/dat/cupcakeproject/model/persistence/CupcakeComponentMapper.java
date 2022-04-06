@@ -5,6 +5,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.util.List;
+import java.util.Optional;
 
 public class CupcakeComponentMapper implements ICupcakeComponentMapper
 {
@@ -21,9 +22,9 @@ public class CupcakeComponentMapper implements ICupcakeComponentMapper
     }
 
     @Override
-    public DBEntity<CupcakeComponent> findById(int id) throws DatabaseException
+    public Optional<DBEntity<CupcakeComponent>> findById(int id) throws DatabaseException
     {
-        return null;
+        return Optional.empty();
     }
 
     @Override

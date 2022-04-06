@@ -3,13 +3,13 @@ package dk.cphbusiness.dat.cupcakeproject.model.entities;
 public class DBEntity <T>
 {
     private final int id;
-    private final T object;
+    private final T entity;
     private Boolean isDeleted;
 
-    public DBEntity(int id, T object)
+    public DBEntity(int id, T entity)
     {
         this.id = id;
-        this.object = object;
+        this.entity = entity;
         this.isDeleted = null;
     }
 
@@ -18,9 +18,9 @@ public class DBEntity <T>
         return id;
     }
 
-    public T getObject()
+    public T getEntity()
     {
-        return object;
+        return entity;
     }
 
     public Boolean getDeleted()
