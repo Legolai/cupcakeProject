@@ -36,10 +36,10 @@ interface IDataMapperTest<T>
     default void findById() throws DatabaseException
     {
         IDataMapper<T> dataMapper = getDataMapper();
-        T t = createListOfEntities().get(3);
+        T t = createListOfEntities().get(2);
         DBEntity<T> dbEntity = new DBEntity<>(4, t);
         assertTrue(dataMapper.findById(1).isPresent());
-        assertEquals(dbEntity,  dataMapper.insert(t));
+        assertEquals(dbEntity, dataMapper.insert(t));
         assertTrue(dataMapper.findById(dbEntity.getId()).isPresent());
     }
 

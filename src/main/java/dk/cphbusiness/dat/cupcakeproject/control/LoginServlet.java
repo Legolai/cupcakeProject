@@ -3,8 +3,8 @@ package dk.cphbusiness.dat.cupcakeproject.control;
 import dk.cphbusiness.dat.cupcakeproject.model.config.ApplicationStart;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
-import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
+import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet
 
         try
         {
-            user = userMapper.login(username, password);
+            user = userMapper.login(username, password).getEntity();
             session = request.getSession();
             session.setAttribute("user", user); // adding user object to session scope
             request.getRequestDispatcher("index.jsp").forward(request, response);

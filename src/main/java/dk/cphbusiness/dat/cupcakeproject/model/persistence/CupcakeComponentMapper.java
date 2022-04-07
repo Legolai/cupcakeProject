@@ -1,6 +1,8 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.*;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponent;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponentType;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -35,10 +37,11 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
                 ps.setString(1, cupcakeComponent.getComponentName());
                 ps.setInt(2, cupcakeComponent.getComponentPrice());
                 int rowsAffected = ps.executeUpdate();
-                ResultSet rs = ps.getResultSet();
+                ResultSet rs = ps.getGeneratedKeys();
 
                 if (rowsAffected == 1)
                 {
+                    rs.next();
                     int id = rs.getInt(1);
                     dbCupcake = new DBEntity<>(id,cupcakeComponent);
                 } else
@@ -124,13 +127,13 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         if (cupcake.getComponentType().equals(CupcakeComponentType.TOPPING))
         {
             sql = "UPDATE cupcaketopping" +
-                    "SET toppingName = ?, price = ?, isDeleted = ?" +
-                    "WHERE toppingID = ?;";
+                    " SET toppingName = ?, price = ?, isDeleted = ?" +
+                    " WHERE toppingID = ?;";
         } else
         {
             sql = "UPDATE cupcakebottom" +
-                    "SET bottomName = ?, price = ?, isDeleted = ?" +
-                    "WHERE bottomID = ?;";
+                    " SET bottomName = ?, price = ?, isDeleted = ?" +
+                    " WHERE bottomID = ?;";
         }
 
         try (Connection connection = connectionPool.getConnection())

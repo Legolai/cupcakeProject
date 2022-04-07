@@ -6,8 +6,10 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.*;
-import java.time.LocalDateTime;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,12 +44,14 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                 ps.setString(6, user.getAddress());
                 ps.setInt(7, user.getAccount().getBalance());
                 int rowsAffected = ps.executeUpdate();
-                ResultSet rs = ps.getResultSet();
 
                 if (rowsAffected == 1)
                 {
+                    ResultSet rs = ps.getGeneratedKeys();
+                    rs.next();
                     int id = rs.getInt(1);
                     dbUser = new DBEntity<>(id,user);
+
                 } else
                 {
                     throw new DatabaseException("The user with email = " + user.getEmail() + " could not be inserted into the database");
@@ -68,7 +72,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
 
         List<DBEntity<User>> userList = new ArrayList<>();
 
-        String sql = "SELECT * FROM 'user' order by name;";
+        String sql = "SELECT * FROM User order by 'name';";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -85,12 +89,12 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                     String email = rs.getString("email");
                     String phone = rs.getString("phone");
                     String password = rs.getString("password");
-                    Role role = rs.getObject("role", Role.class);
+                    String role = rs.getString("role");
                     String address = rs.getString("address");
                     int balance = rs.getInt("balance");
 
                     newAccount = new Account(balance);
-                    newUser = new User(name,email,phone,password,role,address,newAccount);
+                    newUser = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
                     user = new DBEntity<>(userID, newUser);
 
                     userList.add(user);
@@ -106,9 +110,10 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     @Override
     public Optional<DBEntity<User>> findById(int id) throws DatabaseException
     {
+        Optional<DBEntity<User>> optionalDBEntity = Optional.empty();
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "SELECT * FROM user WHERE userID = ?";
+        String sql = "SELECT * FROM User WHERE userID = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -126,16 +131,15 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                     String email = rs.getString("email");
                     String phone = rs.getString("phone");
                     String password = rs.getString("password");
-                    Role role = rs.getObject("role", Role.class);
+                    String role = rs.getString("role");
                     String address = rs.getString("address");
                     int balance = rs.getInt("balance");
 
                     newAccount = new Account(balance);
-                    newUser = new User(name,email,phone,password,role,address,newAccount);
+                    newUser = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
                     user = new DBEntity<>(userID, newUser);
 
-                    Optional<DBEntity<User>> opUser = Optional.of(user);
-                    return opUser;
+                    optionalDBEntity = Optional.of(user);
                 } else
                 {
                     throw new DatabaseException("User with id: "+id+" was not found");
@@ -143,8 +147,10 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
             }
         } catch (SQLException ex)
         {
-            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+            ex.printStackTrace();
+//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
+        return optionalDBEntity;
     }
 
     @Override
@@ -152,9 +158,9 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "UPDATE user" +
-                "SET name = ?, email = ?, phone = ?, password = ?, role = ?, address = ?, balance = ?" +
-                "WHERE userID = ?;";
+        String sql = "UPDATE `User`" +
+                " SET `name` = ?, `email` = ?, `phone` = ?, `password` = ?, `role` = ?, `address` = ?, `balance` = ?" +
+                " WHERE userID = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -165,12 +171,11 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                 ps.setString(2,user.getEmail());
                 ps.setString(3,user.getPhone());
                 ps.setString(4,user.getPassword());
-                ps.setObject(5,user.getRole());
+                ps.setString(5,user.getRole().name());
                 ps.setString(6,user.getAddress());
                 ps.setInt(7, user.getAccount().getBalance());
                 ps.setInt(8, t.getId());
 
-                //Role role = rs.getObject("role", Role.class);
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected == 1)
@@ -194,13 +199,13 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     }
 
     @Override
-    public User login(String email, String password) throws DatabaseException
+    public DBEntity<User> login(String email, String password) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        User user = null;
+        DBEntity<User> user = null;
 
-        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM User WHERE email = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -210,17 +215,19 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                 ps.setString(2, password);
                 ResultSet rs = ps.executeQuery();
                 Account newAccount;
+                User userEntity;
                 if (rs.next())
                 {
                     int userID = rs.getInt("userID");
                     String name = rs.getString("name");
                     String phone = rs.getString("phone");
-                    Role role = rs.getObject("role", Role.class);
+                    String role = rs.getString("role");
                     String address = rs.getString("address");
                     int balance = rs.getInt("balance");
 
                     newAccount = new Account(balance);
-                    user = new User(name,email,phone,password,role,address,newAccount);
+                    userEntity = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
+                    user = new DBEntity<>(userID, userEntity);
                 } else
                 {
                     throw new DatabaseException("Wrong username or password");

@@ -10,8 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class UserMapperTest extends DataMapperTest<User>
 {
@@ -27,8 +26,8 @@ class UserMapperTest extends DataMapperTest<User>
     void login() throws DatabaseException
     {
         User expectedUser = new User("Peter","a@a.dk","1234",Role.CUSTOMER);
-        User actualUser = userMapper.login("Peter","1234");
-        assertEquals(expectedUser, actualUser);
+        DBEntity<User> actualUser = userMapper.login("a@a.dk","1234");
+        assertEquals(expectedUser, actualUser.getEntity());
     }
 
     @Test
@@ -46,11 +45,21 @@ class UserMapperTest extends DataMapperTest<User>
     @Test
     void login2() throws DatabaseException
     {
-        DBEntity<User> newUser = userMapper.insert(new User("jill", "1234", "user", Role.CUSTOMER));
-        User logInUser = userMapper.login("jill","1234");
-        User expectedUser = new User("jill", "1234", "user", Role.CUSTOMER);
+        DBEntity<User> newUser = userMapper.insert(new User("jill", "1234@gmail.com", "user", Role.CUSTOMER));
+        DBEntity<User> logInUser = userMapper.login("1234@gmail.com","user");
+        User expectedUser = new User("jill", "1234@gmail.com", "user", Role.CUSTOMER);
         assertEquals(expectedUser, newUser.getEntity());
-        assertEquals(expectedUser, logInUser);
+        assertEquals(expectedUser, logInUser.getEntity());
+    }
+
+    @Test
+    @Override
+    public void update() throws DatabaseException
+    {
+        User t = createListOfEntities().get(0);
+        DBEntity<User> dbEntity = userMapper.insert(t);
+        dbEntity.getEntity().setAddress("Abevej 1");
+        assertTrue(userMapper.update(dbEntity));
     }
 
     @Override
@@ -66,7 +75,7 @@ class UserMapperTest extends DataMapperTest<User>
 
         users.add(new User("Nicolai", "nic@gmail.com", "1234", Role.CUSTOMER));
         users.add(new User("Michael", "mic@gmail.com", "123456", Role.ADMIN));
-        users.add(new User("Muneeb", "tid@gmail.com", "dgh",Role.CUSTOMER));
+        users.add(new User("Muneeb", "tid@gmail.com", "dgh", Role.CUSTOMER));
 
         return users;
     }

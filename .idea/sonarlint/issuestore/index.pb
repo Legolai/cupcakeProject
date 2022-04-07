@@ -51,5 +51,3 @@ Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/services/Authentication.j
 Tsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/CupcakeComponent.java,d/8/d8c039a8b40aaf4a0783ba7c0e961b06e31747fa
 x
 Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Role.java,5/4/54c375020ad6ed644bb769e8c02d9315a90ae200
-x
-Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/User.java,a/4/a4b366c29021b0e0c10af958f6bb92e86059eab1

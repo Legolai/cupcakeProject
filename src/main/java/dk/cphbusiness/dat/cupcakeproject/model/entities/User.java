@@ -1,5 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.model.entities;
 
+import java.util.Objects;
+
 public class User
 {
     private String name;
@@ -100,5 +102,20 @@ public class User
     public void setAddress(String address)
     {
         this.address = address;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return getName().equals(user.getName()) && getEmail().equals(user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && getPassword().equals(user.getPassword()) && getRole() == user.getRole() && Objects.equals(getAddress(), user.getAddress());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getName(), getEmail(), getPhone(), getPassword(), getRole(), getAddress());
     }
 }

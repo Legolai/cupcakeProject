@@ -1,5 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.model.entities;
 
+import java.util.Objects;
+
 public class DBEntity <T>
 {
     private int id;
@@ -33,5 +35,20 @@ public class DBEntity <T>
     public void setDeleted(Boolean deleted)
     {
         isDeleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof DBEntity)) return false;
+        DBEntity<?> dbEntity = (DBEntity<?>) o;
+        return getId() == dbEntity.getId() && getEntity().equals(dbEntity.getEntity());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getEntity());
     }
 }

@@ -1,6 +1,8 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.*;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -122,38 +124,39 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public boolean update(DBEntity<Order> t) throws DatabaseException
     {
-        Logger.getLogger("web").log(Level.INFO, "");
-
-        String sql = "UPDATE order" +
-                "SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?" +
-                "WHERE orderID = ?;";
-
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
-                User user = t.getEntity();
-                ps.setInt(1,user.getName());
-                ps.setObject(2,user.getEmail());
-                ps.setObject(3,user.getPhone());
-                ps.setObject(4,user.getPassword());
-                ps.setInt(5,t.getId());
-
-                //Role role = rs.getObject("role", Role.class);
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected == 1)
-                {
-                    return true;
-                } else
-                {
-                    throw new DatabaseException("The user with email = " + t.getEntity().getEmail() + " could not be updated in the database");
-                }
-            }
-        } catch (SQLException ex)
-        {
-            throw new DatabaseException(ex, "Error updating selected user. Something went wrong with the database");
-        }
+//        Logger.getLogger("web").log(Level.INFO, "");
+//
+//        String sql = "UPDATE order" +
+//                "SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?" +
+//                "WHERE orderID = ?;";
+//
+//        try (Connection connection = connectionPool.getConnection())
+//        {
+//            try (PreparedStatement ps = connection.prepareStatement(sql))
+//            {
+//                User user = t.getEntity();
+//                ps.setInt(1,user.getName());
+//                ps.setObject(2,user.getEmail());
+//                ps.setObject(3,user.getPhone());
+//                ps.setObject(4,user.getPassword());
+//                ps.setInt(5,t.getId());
+//
+//                //Role role = rs.getObject("role", Role.class);
+//                int rowsAffected = ps.executeUpdate();
+//
+//                if (rowsAffected == 1)
+//                {
+//                    return true;
+//                } else
+//                {
+//                    throw new DatabaseException("The user with email = " + t.getEntity().getEmail() + " could not be updated in the database");
+//                }
+//            }
+//        } catch (SQLException ex)
+//        {
+//            throw new DatabaseException(ex, "Error updating selected user. Something went wrong with the database");
+//        }
+        return false;
     }
 
     @Override
