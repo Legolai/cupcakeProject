@@ -1,8 +1,10 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
 import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponent;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponentType;
 import org.junit.jupiter.api.BeforeAll;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CupcakeComponentMapperTest extends DataMapperTest<CupcakeComponent>
@@ -25,6 +27,12 @@ public class CupcakeComponentMapperTest extends DataMapperTest<CupcakeComponent>
     @Override
     public List<CupcakeComponent> createListOfEntities()
     {
-        return null;
+        List<CupcakeComponent> components = new ArrayList<>();
+
+        components.add(new CupcakeComponent(CupcakeComponentType.TOPPING, "Orange", 8));
+        components.add(new CupcakeComponent(CupcakeComponentType.BUTTOM, "Almond", 7));
+        components.add(new CupcakeComponent(CupcakeComponentType.TOPPING, "Lemon", 8));
+
+        return components;
     }
 }

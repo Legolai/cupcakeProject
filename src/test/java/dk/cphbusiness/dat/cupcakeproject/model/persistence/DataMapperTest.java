@@ -42,13 +42,13 @@ public abstract class DataMapperTest<T> implements IDataMapperTest<T>
                 stmt.execute("ALTER TABLE `CupcakeBottom` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `CupcakeBottom` AUTO_INCREMENT = 1");
                 stmt.execute("insert into `CupcakeBottom` (`bottomName`, `price`) " +
-                        "values ('Chocolate', 5),('Vanilla', 5), ('Nutmeg', 5), ('Pistacio', 6), ('Almond', 7)");
+                        "values ('Chocolate', 5),('Vanilla', 5), ('Nutmeg', 5)");
                 stmt.execute("ALTER TABLE `CupcakeBottom` ENABLE KEYS");
 
                 stmt.execute("ALTER TABLE `CupcakeTopping` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `CupcakeTopping` AUTO_INCREMENT = 1");
                 stmt.execute("insert into `CupcakeTopping` (`toppingName`, `price`) " +
-                        "values ('Chocolate', 5),('Blueberry', 5), ('Rasberry', 5), ('Crispy', 6), ('Strawberry', 7)");
+                        "values ('Chocolate', 5),('Blueberry', 5), ('Rasberry', 5)");
                 stmt.execute("ALTER TABLE `CupcakeTopping` ENABLE KEYS");
 
 
@@ -62,7 +62,7 @@ public abstract class DataMapperTest<T> implements IDataMapperTest<T>
                 stmt.execute("ALTER TABLE `OrderDetail` AUTO_INCREMENT = 1");
                 stmt.execute("insert into `OrderDetail` (`orderNumber`, `quantityOrdered`, `toppingID`, `bottomID`) " +
                         "values (1, 1, 1, 2), (1, 3, 1, 1), (1, 2, 3, 2), " +
-                        "(2, 1, 1, 2), (2, 3, 1, 1), (3, 2, 4, 5)");
+                        "(2, 1, 1, 2), (2, 3, 1, 1), (3, 2, 3, 3)");
                 stmt.execute("ALTER TABLE `OrderDetail` ENABLE KEYS");
 
             }

@@ -20,8 +20,7 @@ interface IDataMapperTest<T>
     {
         IDataMapper<T> dataMapper = getDataMapper();
         T t = createListOfEntities().get(0);
-        DBEntity<T> dbEntity = new DBEntity<>(4, t);
-        assertEquals(dbEntity, dataMapper.insert(t));
+        assertEquals(4, dataMapper.insert(t).getId());
     }
 
     @Test
@@ -30,7 +29,7 @@ interface IDataMapperTest<T>
         IDataMapper<T> dataMapper = getDataMapper();
         assertEquals(3, dataMapper.getAll().size());
         assertEquals(4, dataMapper.insert(createListOfEntities().get(2)).getId());
-        assertEquals(3, dataMapper.getAll().size());
+        assertEquals(4, dataMapper.getAll().size());
     }
 
     @Test

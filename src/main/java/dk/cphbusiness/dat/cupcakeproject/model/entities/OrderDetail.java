@@ -5,14 +5,13 @@ public class OrderDetail
     private final int toppingId;
     private final int bottomId;
     private final int quantity;
-    private final int orderId;
+    private int orderId;
 
-    public OrderDetail(int toppingId, int bottomId, int quantity, int orderId)
+    public OrderDetail(int toppingId, int bottomId, int quantity)
     {
         this.toppingId = toppingId;
         this.bottomId = bottomId;
         this.quantity = quantity;
-        this.orderId = orderId;
     }
 
     public int getToppingId()
@@ -34,4 +33,6 @@ public class OrderDetail
     {
         return orderId;
     }
+
+    public void setOrderId(int orderId) { this.orderId = orderId;}
 }
