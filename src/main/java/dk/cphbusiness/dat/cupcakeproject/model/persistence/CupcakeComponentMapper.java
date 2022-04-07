@@ -7,8 +7,13 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import java.util.List;
 import java.util.Optional;
 
-public class CupcakeComponentMapper implements ICupcakeComponentMapper
+public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> implements ICupcakeComponentMapper
 {
+    public CupcakeComponentMapper(ConnectionPool connectionPool)
+    {
+        super(connectionPool);
+    }
+
     @Override
     public DBEntity<CupcakeComponent> insert(CupcakeComponent cupcakeComponent) throws DatabaseException
     {

@@ -7,6 +7,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -22,12 +23,11 @@ class UserMapperTest extends DataMapperTest<User>
         userMapper = new UserMapper(connectionPool);
     }
 
-
     @Test
     void login() throws DatabaseException
     {
-        User expectedUser = new User("user","1234","user", Role.CUSTOMER);
-        User actualUser = userMapper.login("user","1234");
+        User expectedUser = new User("Peter","a@a.dk","1234",Role.CUSTOMER);
+        User actualUser = userMapper.login("Peter","1234");
         assertEquals(expectedUser, actualUser);
     }
 
@@ -51,7 +51,6 @@ class UserMapperTest extends DataMapperTest<User>
         User expectedUser = new User("jill", "1234", "user", Role.CUSTOMER);
         assertEquals(expectedUser, newUser.getEntity());
         assertEquals(expectedUser, logInUser);
-
     }
 
     @Override
@@ -63,6 +62,12 @@ class UserMapperTest extends DataMapperTest<User>
     @Override
     public List<User> createListOfEntities()
     {
-        return null;
+        List<User> users = new ArrayList<>();
+
+        users.add(new User("Nicolai", "nic@gmail.com", "1234", Role.CUSTOMER));
+        users.add(new User("Michael", "mic@gmail.com", "123456", Role.ADMIN));
+        users.add(new User("Muneeb", "tid@gmail.com", "dgh",Role.CUSTOMER));
+
+        return users;
     }
 }
