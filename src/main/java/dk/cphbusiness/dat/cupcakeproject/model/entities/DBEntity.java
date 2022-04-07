@@ -2,7 +2,7 @@ package dk.cphbusiness.dat.cupcakeproject.model.entities;
 
 public class DBEntity <T>
 {
-    private final int id;
+    private int id;
     private final T entity;
     private Boolean isDeleted;
 
@@ -17,17 +17,19 @@ public class DBEntity <T>
     {
         return id;
     }
-
     public T getEntity()
     {
         return entity;
     }
-
     public Boolean getDeleted()
     {
         return isDeleted;
     }
 
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setDeleted(Boolean deleted)
     {
         isDeleted = deleted;
