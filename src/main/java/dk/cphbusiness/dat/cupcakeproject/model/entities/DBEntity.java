@@ -17,21 +17,19 @@ public class DBEntity <T>
     {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public T getEntity()
     {
         return entity;
     }
-
     public Boolean getDeleted()
     {
         return isDeleted;
     }
 
+
+    public void setId(int id) {
+        this.id = id;
+    }
     public void setDeleted(Boolean deleted)
     {
         isDeleted = deleted;

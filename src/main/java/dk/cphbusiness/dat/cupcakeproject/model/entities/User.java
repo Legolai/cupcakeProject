@@ -18,6 +18,24 @@ public class User
         this.role = role;
         this.account = new Account(0);
     }
+    public User(String name, String email, String phone, String password, Role role, String address) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
+        this.address = address;
+    }
+    public User(String name, String email, String phone, String password, Role role, String address, Account account) {
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.password = password;
+        this.role = role;
+        this.address = address;
+        this.account = account;
+    }
+
 
     public String getName()
     {

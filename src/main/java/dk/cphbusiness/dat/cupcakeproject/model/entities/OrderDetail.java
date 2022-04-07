@@ -6,6 +6,7 @@ public class OrderDetail
     private final int bottomId;
     private final int quantity;
     private int orderId;
+    private String comments;
 
     public OrderDetail(int toppingId, int bottomId, int quantity)
     {
@@ -18,21 +19,27 @@ public class OrderDetail
     {
         return toppingId;
     }
-
     public int getBottomId()
     {
         return bottomId;
     }
-
     public int getQuantity()
     {
         return quantity;
     }
-
     public int getOrderId()
     {
         return orderId;
     }
+    public String getComments() {
+        return comments;
+    }
 
-    public void setOrderId(int orderId) { this.orderId = orderId;}
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
 }
