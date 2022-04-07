@@ -12,5 +12,7 @@ public interface IDataMapper <T>
     List<DBEntity<T>> getAll() throws DatabaseException;
     Optional<DBEntity<T>> findById(int id) throws DatabaseException;
     boolean update(DBEntity<T> t) throws DatabaseException;
+    boolean enable(DBEntity<T> t) throws DatabaseException;
+    boolean disable(DBEntity<T> t) throws DatabaseException;
     boolean delete(DBEntity<T> t) throws DatabaseException;
 }

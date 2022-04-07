@@ -1,6 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
@@ -102,8 +103,9 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                 ResultSet rs = ps.executeQuery();
                 if (rs.next())
                 {
-                    String role = rs.getString("role");
-                    user = new User(email, password, role);
+                    String name = rs.getString("Name");
+                    Role role = rs.getObject("role", Role.class);
+                    user = new User(name, email, password, role);
                 } else
                 {
                     throw new DatabaseException("Wrong username or password");
