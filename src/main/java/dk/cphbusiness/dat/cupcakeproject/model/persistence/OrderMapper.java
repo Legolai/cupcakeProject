@@ -1,14 +1,13 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.*;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,10 +37,10 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                 ps.setObject(2, order.getRequestedDelivery());
 
                 int rowsAffected = ps.executeUpdate();
-                ResultSet rs = ps.getResultSet();
 
                 if (rowsAffected == 1)
                 {
+                    ResultSet rs = ps.getGeneratedKeys();
                     int id = rs.getInt(1);
                     insertOrderDetails(order, id);
                     dbOrder = new DBEntity<>(id,order);
@@ -61,16 +60,16 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        List<DBEntity<OrderDetail>> orderDetails = order.getOrderDetails();
+        List<DBEntity<OrderDetail>> orderDetailList = order.getOrderDetails();
         OrderDetail orderDetail;
         List<DBEntity<OrderDetail>> dbOrderDetails = new ArrayList<>();
-        String sql = "insert into orderdetail (orderID, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
+        String sql = "insert into Orderdetail (orderID, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
             {
-                for (DBEntity<OrderDetail> od: orderDetails) {
+                for (DBEntity<OrderDetail> od: orderDetailList) {
                     orderDetail = od.getEntity();
 
                     ps.setInt(1, orderId);
@@ -80,10 +79,10 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     ps.setString(5, orderDetail.getComments());
 
                     int rowsAffected = ps.executeUpdate();
-                    ResultSet rs = ps.getResultSet();
 
                     if (rowsAffected == 1)
                     {
+                        ResultSet rs = ps.getGeneratedKeys();
                         int newId = rs.getInt(1);
                         od.setId(newId);
                         od.getEntity().setOrderId(orderId);
@@ -107,7 +106,40 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public List<DBEntity<Order>> getAll() throws DatabaseException
     {
-        return null;
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        List<DBEntity<Order>> orderList = new ArrayList<>();
+
+        String sql = "SELECT * FROM 'Order' order by 'orderID';";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                ResultSet rs = ps.executeQuery();
+                Order order;
+                DBEntity<Order> dbOrder;
+
+                while (rs.next())
+                {
+                    int orderID = rs.getInt("orderID");
+                    int userID = rs.getInt("userID");
+                    LocalDateTime created = (LocalDateTime) rs.getObject("created");
+                    LocalDateTime requestedDelivery = (LocalDateTime) rs.getObject("requestedDelivery");
+                    LocalDateTime shipped = (LocalDateTime) rs.getObject("shipped");
+
+                    List<DBEntity<OrderDetail>> orderDetails = getOrderDetailsFromOrderID(orderID);
+
+                    order = new Order(userID,created,requestedDelivery,shipped,orderDetails);
+                    dbOrder = new DBEntity<>(orderID, order);
+                    orderList.add(dbOrder);
+                }
+            }
+        } catch (SQLException ex)
+        {
+            throw new DatabaseException(ex, "Error getting all users. Something went wrong with the database");
+        }
+        return orderList;
     }
 
     @Override
@@ -118,45 +150,121 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
     public Optional<List<DBEntity<Order>>> findByUserId(int id) throws DatabaseException
     {
-        return Optional.empty();
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        Optional<List<DBEntity<Order>>> optionalDBEntityList = Optional.empty();
+        List<DBEntity<Order>> list = new ArrayList<>();
+        String sql = "SELECT * FROM order WHERE userID = ?";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                Order order;
+                DBEntity<Order> dbOrder;
+
+                if (rs.next())
+                {
+                    int orderID = rs.getInt("orderID");
+                    int userID = rs.getInt("userID");
+                    LocalDateTime created = (LocalDateTime) rs.getObject("created");
+                    LocalDateTime requestedDelivery = (LocalDateTime) rs.getObject("requestedDelivery");
+                    LocalDateTime shipped = (LocalDateTime) rs.getObject("shipped");
+
+                    List<DBEntity<OrderDetail>> orderDetails = getOrderDetailsFromOrderID(orderID);
+
+                    order = new Order(userID,created,requestedDelivery,shipped,orderDetails);
+                    dbOrder = new DBEntity<>(orderID, order);
+                    list.add(dbOrder);
+                } else
+                {
+                    throw new DatabaseException("Order with userID: "+id+" was not found");
+                }
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+        }
+        optionalDBEntityList = Optional.of(list);
+        return optionalDBEntityList;
+    }
+    private List<DBEntity<OrderDetail>> getOrderDetailsFromOrderID(int orderId) throws DatabaseException
+    {
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        List<DBEntity<OrderDetail>> DBEntityOrderDetailList = new ArrayList<>();
+        String sql = "SELECT * FROM orderdetail WHERE orderNumber = ?";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                ps.setInt(1, orderId);
+                ResultSet rs = ps.executeQuery();
+                OrderDetail orderDetail;
+                DBEntity<OrderDetail> dbOrderDetail;
+
+                if (rs.next())
+                {
+                    int orderDetailID = rs.getInt("orderDetailID");
+                    int orderNumber = rs.getInt("orderNumber");
+                    int quantityOrdered = rs.getInt("quantityOrdered");
+                    int toppingID = rs.getInt("toppingID");
+                    int bottomID = rs.getInt("bottomID");
+                    String comments = rs.getString("comments");
+
+                    orderDetail = new OrderDetail(toppingID, bottomID, quantityOrdered, orderNumber, comments);
+                    dbOrderDetail = new DBEntity<>(orderDetailID, orderDetail);
+                    DBEntityOrderDetailList.add(dbOrderDetail);
+                } else
+                {
+                    throw new DatabaseException("Orderdetail with orderNumber: "+orderId+" was not found");
+                }
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+        }
+        return DBEntityOrderDetailList;
     }
 
     @Override
     public boolean update(DBEntity<Order> t) throws DatabaseException
     {
-//        Logger.getLogger("web").log(Level.INFO, "");
-//
-//        String sql = "UPDATE order" +
-//                "SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?" +
-//                "WHERE orderID = ?;";
-//
-//        try (Connection connection = connectionPool.getConnection())
-//        {
-//            try (PreparedStatement ps = connection.prepareStatement(sql))
-//            {
-//                User user = t.getEntity();
-//                ps.setInt(1,user.getName());
-//                ps.setObject(2,user.getEmail());
-//                ps.setObject(3,user.getPhone());
-//                ps.setObject(4,user.getPassword());
-//                ps.setInt(5,t.getId());
-//
-//                //Role role = rs.getObject("role", Role.class);
-//                int rowsAffected = ps.executeUpdate();
-//
-//                if (rowsAffected == 1)
-//                {
-//                    return true;
-//                } else
-//                {
-//                    throw new DatabaseException("The user with email = " + t.getEntity().getEmail() + " could not be updated in the database");
-//                }
-//            }
-//        } catch (SQLException ex)
-//        {
-//            throw new DatabaseException(ex, "Error updating selected user. Something went wrong with the database");
-//        }
-        return false;
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        String sql = "UPDATE Order" +
+                " SET requestedDelivery = ?, shipped = ?" +
+                " WHERE orderID = ?;";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                Order order = t.getEntity();
+                ps.setObject(1,order.getRequestedDelivery());
+                ps.setObject(2,order.getShipped());
+                ps.setInt(3,t.getId());
+
+                //Role role = rs.getObject("role", Role.class);
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected == 1)
+                {
+                    return true;
+                } else
+                {
+                    throw new DatabaseException("The order with id = " + t.getId() + " could not be updated in the database");
+                }
+            }
+        } catch (SQLException ex)
+        {
+            throw new DatabaseException(ex, "Error updating selected order. Something went wrong with the database");
+        }
     }
 
     @Override
