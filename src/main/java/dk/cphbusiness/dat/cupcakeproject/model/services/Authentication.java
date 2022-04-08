@@ -1,13 +1,34 @@
 package dk.cphbusiness.dat.cupcakeproject.model.services;
 
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Access;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 public class Authentication
 {
-    public static boolean isRoleAllowed(String role, HttpServletRequest request)
+    public static Access isRoleAllowed(Role minimumRole, HttpServletRequest request)
     {
-        // Todo: extract user object from session scope and check role
+        HttpSession session = request.getSession();
+        DBEntity<User> user = (DBEntity<User>) session.getAttribute("user");
 
-        return true;
+        if (user == null) {
+            return Access.INACTIVE;
+        }
+
+        Role userRole = user.getEntity().getRole();
+        Access access = Access.DENIED;
+
+        if (userRole.equals(minimumRole)){
+            access = Access.LIMITED;
+            if (minimumRole.equals(Role.ADMIN)){
+                access = Access.FULL;
+            }
+        }
+
+        return access;
     }
 }

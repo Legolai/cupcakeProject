@@ -2,20 +2,20 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page errorPage="error.jsp" isErrorPage="false" %>
+<%@page errorPage="../error.jsp" isErrorPage="false" %>
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-            Kontakt
+            Om Os
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-            Kontakt
+            Om os
     </jsp:attribute>
 
     <jsp:body>
 
-        <h3>Du kan kontakte os over tlf. xxxxxxxxx</h3>
+        <h3>Om Os, Olsker Cupcakes</h3>
 
 
     </jsp:body>

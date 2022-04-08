@@ -30,15 +30,15 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/index.jsp">Hjem</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/cupcakes.jsp">Cupcakes</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/omOs.jsp">Om Os</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/kontakt.jsp">Kontakt</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}">Hjem</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/cupcakes-page">Cupcakes</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/omOs-page">Om Os</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/kontakt-page">Kontakt</a>
                     <c:if test="${sessionScope.user == null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/login.jsp">Login</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/login-page">Login</a>
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/logout">Log out</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/logout-command">Log out</a>
                     </c:if>
                 </div>
             </div>
