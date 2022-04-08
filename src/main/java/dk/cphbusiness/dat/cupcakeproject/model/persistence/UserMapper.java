@@ -60,6 +60,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
         }
         catch (SQLException ex)
         {
+            ex.printStackTrace();
             throw new DatabaseException(ex, "Could not insert user into database");
         }
         return dbUser;

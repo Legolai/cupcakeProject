@@ -1,6 +1,8 @@
 package dk.cphbusiness.dat.cupcakeproject.control;
 
 import dk.cphbusiness.dat.cupcakeproject.model.config.ApplicationStart;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
@@ -16,8 +18,8 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet(name = "login", urlPatterns = {"/login"} )
-public class LoginServlet extends HttpServlet
+@WebServlet(name = "createAccount", urlPatterns = {"/createAccount"} )
+public class CreateAccountServlet extends HttpServlet
 {
     private ConnectionPool connectionPool;
 
@@ -40,16 +42,14 @@ public class LoginServlet extends HttpServlet
         HttpSession session = request.getSession();
         session.setAttribute("user", null); // adding empty user object to session scope
         UserMapper userMapper = new UserMapper(connectionPool);
-        User user = null;
+        String name = request.getParameter("name");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
+        User newUser = new User(name,email,password, Role.CUSTOMER);
         try
         {
-            user = userMapper.login(email, password).getEntity();
-            session = request.getSession();
-            session.setAttribute("user", user); // adding user object to session scope
-            request.getRequestDispatcher("index.jsp").forward(request, response);
+            userMapper.insert(newUser);
+            response.sendRedirect("login.jsp");
         }
         catch (DatabaseException e)
         {

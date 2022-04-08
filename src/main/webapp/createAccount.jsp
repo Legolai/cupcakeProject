@@ -6,23 +6,25 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-            Login
+            Opret Bruger
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-            Login
+            Opret Bruger
     </jsp:attribute>
 
     <jsp:body>
 
-        <h3>You can log in here</h3>
+        <h3>Opret Bruger</h3>
 
-        <form action="login" method="post">
+        <form action="createAccount" method="post">
+            <label for="name">Navn: </label>
+            <input type="text" id="name" name="name"/>
             <label for="email">Email: </label>
             <input type="text" id="email" name="email"/>
-            <label for="password">Password: </label>
+            <label for="password">Kode ord: </label>
             <input type="password" id="password" name="password"/>
-            <input type="submit"  value="Log in"/>
+            <input type="submit"  value="Opret bruger"/>
         </form>
 
     </jsp:body>
