@@ -47,7 +47,5 @@ s
 Csrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Logout.java,3/6/3649aaa00a37be9f1a80b57b031e9253eee6f696
 ‚
 Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/services/Authentication.java,a/7/a703f53f36dc3702f95cab5e2bf019edc5824f77
-„
-Tsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/CupcakeComponent.java,d/8/d8c039a8b40aaf4a0783ba7c0e961b06e31747fa
 x
 Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Role.java,5/4/54c375020ad6ed644bb769e8c02d9315a90ae200

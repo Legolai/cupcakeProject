@@ -76,7 +76,7 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         if (selection.equals("bottoms") || selection.equals("all"))
         {
             sql = "SELECT * FROM cupcakebottom order by bottomName;";
-            cupcakeList.addAll(getToppingsOrBottoms(sql, CupcakeComponentType.BUTTOM));
+            cupcakeList.addAll(getToppingsOrBottoms(sql, CupcakeComponentType.BOTTOM));
         }
         return cupcakeList;
     }

@@ -1,5 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.model.entities;
 
+import java.util.Objects;
+
 public class CupcakeComponent
 {
     private final CupcakeComponentType componentType;
@@ -26,5 +28,20 @@ public class CupcakeComponent
     public int getComponentPrice()
     {
         return componentPrice;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof CupcakeComponent)) return false;
+        CupcakeComponent that = (CupcakeComponent) o;
+        return getComponentPrice() == that.getComponentPrice() && getComponentType() == that.getComponentType() && getComponentName().equals(that.getComponentName());
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getComponentType(), getComponentName(), getComponentPrice());
     }
 }
