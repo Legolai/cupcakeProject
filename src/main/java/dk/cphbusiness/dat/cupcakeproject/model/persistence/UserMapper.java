@@ -30,8 +30,8 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<User> dbUser;
-
         String sql = "insert into user (name, email, phone, password, role, address, balance) values (?,?,?,?,?,?,?)";
+
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
