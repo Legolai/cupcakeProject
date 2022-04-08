@@ -3,11 +3,16 @@ package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
+import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class OrderMapperTest extends DataMapperTest<Order>
 {
@@ -56,5 +61,15 @@ public class OrderMapperTest extends DataMapperTest<Order>
         orders.add(order3);
 
         return orders;
+    }
+
+    @Test
+    public void findByUserId() throws DatabaseException
+    {
+        Order t = createListOfEntities().get(2);
+        DBEntity<Order> dbEntity = new DBEntity<>(4, t);
+        assertTrue(orderMapper.findByUserId(2).isPresent());
+        assertEquals(dbEntity, orderMapper.insert(t));
+        assertTrue(orderMapper.findByUserId(dbEntity.getEntity().getUserId()).isPresent());
     }
 }

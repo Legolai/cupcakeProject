@@ -27,7 +27,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<Order> dbOrder;
-        String sql = "insert into order (userID, requestedDelivery) values (?,?)";
+        String sql = "insert into `order` (userID, requestedDelivery) values (?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -41,6 +41,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                 if (rowsAffected == 1)
                 {
                     ResultSet rs = ps.getGeneratedKeys();
+                    rs.next();
                     int id = rs.getInt(1);
                     insertOrderDetails(order, id);
                     dbOrder = new DBEntity<>(id,order);
@@ -63,7 +64,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         List<DBEntity<OrderDetail>> orderDetailList = order.getOrderDetails();
         OrderDetail orderDetail;
         List<DBEntity<OrderDetail>> dbOrderDetails = new ArrayList<>();
-        String sql = "insert into Orderdetail (orderID, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
+        String sql = "insert into `orderdetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -78,26 +79,29 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     ps.setInt(4, orderDetail.getBottomId());
                     ps.setString(5, orderDetail.getComments());
 
-                    int rowsAffected = ps.executeUpdate();
+                    ps.addBatch();
+                }
 
-                    if (rowsAffected == 1)
-                    {
-                        ResultSet rs = ps.getGeneratedKeys();
-                        int newId = rs.getInt(1);
-                        od.setId(newId);
-                        od.getEntity().setOrderId(orderId);
-                        dbOrderDetails.add(od);
-                    } else
-                    {
-                        throw new DatabaseException("The orderdetail with orderID = " + orderId + " could not be inserted into the database");
-                    }
+                ps.executeBatch();
+                ResultSet rs = ps.getGeneratedKeys();
+
+                int currentIndex = 0;
+                while (rs.next())
+                {
+                    DBEntity<OrderDetail> od = orderDetailList.get(currentIndex);
+                    int newId = rs.getInt(1);
+                    od.setId(newId);
+                    od.getEntity().setOrderId(orderId);
+                    dbOrderDetails.add(od);
+                    ++currentIndex;
                 }
 
             }
         }
         catch (SQLException ex)
         {
-            throw new DatabaseException(ex, "Could not insert the orderdetails into database");
+            ex.printStackTrace();
+            //throw new DatabaseException(ex, "Could not insert the orderdetails into database");
         }
         return dbOrderDetails;
     }
@@ -110,7 +114,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         List<DBEntity<Order>> orderList = new ArrayList<>();
 
-        String sql = "SELECT * FROM 'Order' order by 'orderID';";
+        String sql = "SELECT * FROM `order` order by 'orderID';";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -154,7 +158,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         Optional<List<DBEntity<Order>>> optionalDBEntityList = Optional.empty();
         List<DBEntity<Order>> list = new ArrayList<>();
-        String sql = "SELECT * FROM order WHERE userID = ?";
+        String sql = "SELECT * FROM `order` WHERE userID = ?";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -237,7 +241,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "UPDATE Order" +
+        String sql = "UPDATE `order`" +
                 " SET requestedDelivery = ?, shipped = ?" +
                 " WHERE orderID = ?;";
 

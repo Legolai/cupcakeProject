@@ -43,7 +43,7 @@ public class CupcakeComponentMapperTest extends DataMapperTest<CupcakeComponent>
         List<CupcakeComponent> components = new ArrayList<>();
 
         components.add(new CupcakeComponent(CupcakeComponentType.TOPPING, "Orange", 8));
-        components.add(new CupcakeComponent(CupcakeComponentType.BUTTOM, "Almond", 7));
+        components.add(new CupcakeComponent(CupcakeComponentType.BOTTOM, "Almond", 7));
         components.add(new CupcakeComponent(CupcakeComponentType.TOPPING, "Lemon", 8));
 
         return components;
