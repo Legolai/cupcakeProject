@@ -64,7 +64,7 @@ public class OrderMapperTest extends DataMapperTest<Order>
     }
 
     @Test
-    public void findByUserId() throws DatabaseException
+    void findByUserId() throws DatabaseException
     {
         Order t = createListOfEntities().get(2);
         DBEntity<Order> dbEntity = new DBEntity<>(4, t);

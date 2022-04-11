@@ -5,10 +5,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +26,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<Order> dbOrder;
-        String sql = "insert into order (userID, requestedDelivery) values (?,?)";
+        String sql = "insert into `order` (userID, requestedDelivery) values (?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -153,6 +150,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         return Optional.empty();
     }
 
+    @Override
     public Optional<List<DBEntity<Order>>> findByUserId(int id) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -190,17 +188,17 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
             }
         } catch (SQLException ex)
         {
-            ex.printStackTrace();
-//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
         optionalDBEntityList = Optional.of(list);
         return optionalDBEntityList;
     }
+
     private List<DBEntity<OrderDetail>> getOrderDetailsFromOrderID(int orderId) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        List<DBEntity<OrderDetail>> DBEntityOrderDetailList = new ArrayList<>();
+        List<DBEntity<OrderDetail>> orderDetailEntityList = new ArrayList<>();
         String sql = "SELECT * FROM orderdetail WHERE orderNumber = ?";
 
         try (Connection connection = connectionPool.getConnection())
@@ -223,7 +221,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
                     orderDetail = new OrderDetail(toppingID, bottomID, quantityOrdered, orderNumber, comments);
                     dbOrderDetail = new DBEntity<>(orderDetailID, orderDetail);
-                    DBEntityOrderDetailList.add(dbOrderDetail);
+                    orderDetailEntityList.add(dbOrderDetail);
                 } else
                 {
                     throw new DatabaseException("Orderdetail with orderNumber: "+orderId+" was not found");
@@ -231,10 +229,9 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
             }
         } catch (SQLException ex)
         {
-            ex.printStackTrace();
-//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
-        return DBEntityOrderDetailList;
+        return orderDetailEntityList;
     }
 
     @Override

@@ -35,18 +35,5 @@ e
 5.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml,4/4/448c004e9fdda2afc7a59a6f0e73f42fb2e8da8b
 d
 4.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml,6/2/6284eecedd2d85fb3913164f96df4582210062ba
-:
-
-.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
-M
-src/main/webapp/css/style.css,2/c/2c1f525046eaa5ad3e39cc3d3b2f4c4fab4ff318
-†
-Vsrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/OrderMapperTest.java,0/7/07ffb47b3b4321211ca34f4131be710df860a7d1
-…
-Usrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/DataMapperTest.java,e/1/e19132f2eb341883bc1be0ef0aa4f694dff83455
-…
-Usrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/UserMapperTest.java,a/7/a7667e469b01fbd283362bb65e88cb8c60023214
-9
-	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
 
 Osrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/webType/PageDirect.java,5/0/50f0811542388a60fc522d8412605761b982b158
