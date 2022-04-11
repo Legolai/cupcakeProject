@@ -1,6 +1,5 @@
 package dk.cphbusiness.dat.cupcakeproject.control.filters;
 
-import dk.cphbusiness.dat.cupcakeproject.control.FrontControllerServlet;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.Command;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.CommandController;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.ProtectedPageCommand;
@@ -41,7 +40,7 @@ public class AuthenticationFilter implements Filter
         String servletPath = req.getServletPath();
         if (servletPath != null && servletPath.equals("/fc"))
         {
-            Command command = CommandController.fromPath(req, FrontControllerServlet.getConnectionPool());
+            Command command = CommandController.getInstance().fromPath(req);
             HttpSession session = req.getSession(false);
             if (command instanceof ProtectedPageCommand protectedPageCommand)
             {

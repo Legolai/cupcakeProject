@@ -12,6 +12,9 @@ Michael og Nicolai - Basic test setup for IDataMapper og alle der implementer de
 **Torsdag den 8. april 2022**: \
 Michael og Nicolai - Standard tests kørt og UserMapper og Cupcake...Mapper næsten færdig, OrderMapper færdig senere i dag.
 
+**Fredag den 9. april 2022**: \
+Michael og Nicolai - Skift til en 'enkelt' servlet og command pattern.
+
 ## Baggrund
 Vi har landet en vigtig opgave fra Olsker Cupcakes. Det er endnu et dybdeøkologisk iværksættereventyr fra Bornholm, som har ramt den helt rigtige opskrift. Et par hipstere fra København har været forbi bageriet, og indsamlet nogle krav og lavet en halvfærdig mockup af en tænkt forside. En mockup er en meget løs skitse, som viser hvordan det færdige website skal se ud. Det er selvfølgelig ikke alt som er med, og som er tænkt igennem, så det er vores opgave at stille spørgsmål til manglende funktionalitet, komme med forslag osv.
 
@@ -28,7 +31,7 @@ US-3: Som administrator kan jeg indsætte beløb på en kundes konto direkte i M
 
 US-4: Som kunde kan jeg se mine valgte ordrelinier i en indkøbskurv, så jeg kan se den samlede pris.
 
-US-5: Som kunde eller administrator kan jeg logge på systemet med email og kodeord. Når jeg er logget på, skal jeg kunne se min email på hver side (evt. i topmenuen, som vist på mockup’en).
+US-5: Som kunde eller administrator kan jeg logge på systemet med email og kodeord. Når jeg er logget på, skal jeg kunne se min email på hver side (evt. i topmenuen, som vist på mockup’en). `DONE`
 
 US-6: Som administrator kan jeg se alle ordrer i systemet, så jeg kan se hvad der er blevet bestilt.
 
@@ -39,12 +42,12 @@ US-8: Som kunde kan jeg fjerne en ordre fra min indkøbskurv, så jeg kan juster
 US-9: Som administrator kan jeg fjerne en ordre, så systemet ikke kommer til at indeholde udgyldige ordrer. F.eks. hvis kunden aldrig har betalt.
 
 ## Ikke-funktionelle krav
-1. Der laves en mockup i Draw.io eller lignende, som viser de websider den færdige løsning kommer til at bestå af.
-2. Ordrer, kunder og øvrige data skal gemmes i en database.
-3. Databasen skal normaliseres på 3. normalform med mindre andet giver bedre mening.
-4. Kildekoden skal deles på GitHub.
-5. Det færdige produkt skal udvikles i Java, MySql, HTML, CSS, Twitter Bootstrap og køre på en Tomcat webcontainer.
-6. Løsningen skal udvikles med udgangspunkt i vores startkode.
+1. Der laves en mockup i Draw.io eller lignende, som viser de websider den færdige løsning kommer til at bestå af. `DONE`
+2. Ordrer, kunder og øvrige data skal gemmes i en database. `DONE`
+3. Databasen skal normaliseres på 3. normalform med mindre andet giver bedre mening. `DONE`
+4. Kildekoden skal deles på GitHub. `DONE`
+5. Det færdige produkt skal udvikles i Java, MySql, HTML, CSS, Twitter Bootstrap og køre på en Tomcat webcontainer. `DONE`
+6. Løsningen skal udvikles med udgangspunkt i vores startkode. `DONE`
 
 ## Deliveries (det som skal leveres)
 Et EER diagram over databasen.

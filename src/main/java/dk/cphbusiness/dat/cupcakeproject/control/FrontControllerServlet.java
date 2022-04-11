@@ -37,10 +37,9 @@ public class FrontControllerServlet extends HttpServlet
         {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
-            Command action = CommandController.fromPath(request, connectionPool);
+            Command action = CommandController.getInstance().fromPath(request);
 
-            if (action instanceof UnknownCommand)
-            {
+            if (action instanceof UnknownCommand) {
                 response.sendError(404);
                 return;
             }

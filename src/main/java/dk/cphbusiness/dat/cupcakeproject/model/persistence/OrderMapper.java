@@ -43,10 +43,10 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     rs.next();
                     int id = rs.getInt(1);
                     insertOrderDetails(order, id);
-                    dbOrder = new DBEntity<>(id,order);
+                    dbOrder = new DBEntity<>(id, order);
                 } else
                 {
-                    throw new DatabaseException("The order with userID = " + order.getUserId() + " and delivery date = "+order.getRequestedDelivery()+" could not be inserted into the database");
+                    throw new DatabaseException("The order with userID = " + order.getUserId() + " and delivery date = " + order.getRequestedDelivery() + " could not be inserted into the database");
                 }
             }
         }
@@ -56,6 +56,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         return dbOrder;
     }
+
     private List<DBEntity<OrderDetail>> insertOrderDetails(Order order, int orderId) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -69,7 +70,8 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
-                for (DBEntity<OrderDetail> od: orderDetailList) {
+                for (DBEntity<OrderDetail> od : orderDetailList)
+                {
                     orderDetail = od.getEntity();
 
                     ps.setInt(1, orderId);
@@ -129,15 +131,17 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     LocalDateTime created = (LocalDateTime) rs.getObject("created");
                     LocalDateTime requestedDelivery = (LocalDateTime) rs.getObject("requestedDelivery");
                     LocalDateTime shipped = (LocalDateTime) rs.getObject("shipped");
+                    boolean isPaid = rs.getBoolean("paid");
 
                     List<DBEntity<OrderDetail>> orderDetails = getOrderDetailsFromOrderID(orderID);
 
-                    order = new Order(userID,created,requestedDelivery,shipped,orderDetails);
+                    order = new Order(userID, created, requestedDelivery, shipped, orderDetails, isPaid);
                     dbOrder = new DBEntity<>(orderID, order);
                     orderList.add(dbOrder);
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Error getting all users. Something went wrong with the database");
         }
@@ -175,18 +179,20 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     LocalDateTime created = (LocalDateTime) rs.getObject("created");
                     LocalDateTime requestedDelivery = (LocalDateTime) rs.getObject("requestedDelivery");
                     LocalDateTime shipped = (LocalDateTime) rs.getObject("shipped");
+                    boolean isPaid = rs.getBoolean("paid");
 
                     List<DBEntity<OrderDetail>> orderDetails = getOrderDetailsFromOrderID(orderID);
 
-                    order = new Order(userID,created,requestedDelivery,shipped,orderDetails);
+                    order = new Order(userID, created, requestedDelivery, shipped, orderDetails, isPaid);
                     dbOrder = new DBEntity<>(orderID, order);
                     list.add(dbOrder);
                 } else
                 {
-                    throw new DatabaseException("Order with userID: "+id+" was not found");
+                    throw new DatabaseException("Order with userID: " + id + " was not found");
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
@@ -224,10 +230,11 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     orderDetailEntityList.add(dbOrderDetail);
                 } else
                 {
-                    throw new DatabaseException("Orderdetail with orderNumber: "+orderId+" was not found");
+                    throw new DatabaseException("Orderdetail with orderNumber: " + orderId + " was not found");
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
