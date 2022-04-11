@@ -1,6 +1,8 @@
 package dk.cphbusiness.dat.cupcakeproject.model.persistence;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.*;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -31,13 +33,12 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 ps.setInt(1, order.getUserId());
                 ps.setObject(2, order.getRequestedDelivery());
 
                 int rowsAffected = ps.executeUpdate();
-                ResultSet rs = ps.getResultSet();
 
                 if (rowsAffected == 1)
                 {
