@@ -5,10 +5,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponentType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +25,11 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<CupcakeComponent> dbCupcake;
-        String sql = bottomOrTopping(cupcakeComponent,"insert");
+        String sql = bottomOrTopping(cupcakeComponent, "insert");
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 ps.setString(1, cupcakeComponent.getComponentName());
                 ps.setInt(2, cupcakeComponent.getComponentPrice());
@@ -43,10 +40,10 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
                 {
                     rs.next();
                     int id = rs.getInt(1);
-                    dbCupcake = new DBEntity<>(id,cupcakeComponent);
+                    dbCupcake = new DBEntity<>(id, cupcakeComponent);
                 } else
                 {
-                    throw new DatabaseException("The cupcake "+cupcakeComponent.getComponentType()+" with name " + cupcakeComponent.getComponentName() + " and price "+cupcakeComponent.getComponentPrice()+" could not be inserted into the database");
+                    throw new DatabaseException("The cupcake " + cupcakeComponent.getComponentType() + " with name " + cupcakeComponent.getComponentName() + " and price " + cupcakeComponent.getComponentPrice() + " could not be inserted into the database");
                 }
             }
         }
@@ -58,9 +55,11 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
     }
 
     @Override
-    public List<DBEntity<CupcakeComponent>> getAll() throws DatabaseException {
+    public List<DBEntity<CupcakeComponent>> getAll() throws DatabaseException
+    {
         return getSelection("all");
     }
+
     public List<DBEntity<CupcakeComponent>> getSelection(String selection) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -80,6 +79,7 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         }
         return cupcakeList;
     }
+
     private List<DBEntity<CupcakeComponent>> getToppingsOrBottoms(String sql, CupcakeComponentType type) throws DatabaseException
     {
         List<DBEntity<CupcakeComponent>> cupcakeList = new ArrayList<>();
@@ -92,19 +92,20 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
                 DBEntity<CupcakeComponent> dbCupcake;
                 while (rs.next())
                 {
-                    int ID = rs.getInt(1);
-                    String Name = rs.getString(2);
+                    int id = rs.getInt(1);
+                    String name = rs.getString(2);
                     int price = rs.getInt("price");
                     Boolean isDeleted = rs.getBoolean("isDeleted");
 
-                    cupcake = new CupcakeComponent(type,Name,price);
-                    dbCupcake = new DBEntity<CupcakeComponent>(ID,cupcake);
+                    cupcake = new CupcakeComponent(type, name, price);
+                    dbCupcake = new DBEntity<>(id, cupcake);
                     dbCupcake.setDeleted(isDeleted);
 
                     cupcakeList.add(dbCupcake);
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Error cupcakes. Something went wrong with the database");
         }
@@ -114,7 +115,7 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
     @Override       //find by id not that useful
     public Optional<DBEntity<CupcakeComponent>> findById(int id) throws DatabaseException
     {
-        return null;
+        return Optional.empty();
     }
 
     @Override
@@ -140,12 +141,11 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         {
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
-                ps.setString(1,cupcake.getComponentName());
-                ps.setInt(2,cupcake.getComponentPrice());
+                ps.setString(1, cupcake.getComponentName());
+                ps.setInt(2, cupcake.getComponentPrice());
                 ps.setBoolean(3, t.getDeleted());
                 ps.setInt(4, t.getId());
 
-                //Role role = rs.getObject("role", Role.class);
                 int rowsAffected = ps.executeUpdate();
 
                 if (rowsAffected == 1)
@@ -156,7 +156,8 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
                     throw new DatabaseException("The cupcake with name = " + cupcake.getComponentName() + " could not be updated in the database");
                 }
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             throw new DatabaseException(ex, "Error updating selected cupcakeComponent. Something went wrong with the database");
         }
@@ -181,7 +182,7 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
             {
                 sql = "insert into cupcakebottom (bottomName, price) values (?,?)";
             }
-        } else //if (method.equals("getAll"))
+        } else
         {
             if (cupcakeComponent.getComponentType().equals(CupcakeComponentType.TOPPING))
             {

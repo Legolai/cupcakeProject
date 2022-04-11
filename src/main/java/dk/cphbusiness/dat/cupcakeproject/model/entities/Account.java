@@ -11,14 +11,16 @@ public class Account
 
     public int deposit(int amount) {
         if(amount > 0){
-            return balance += amount;
+            balance += amount;
+            return balance;
         }
         return balance;
     }
 
     public int withdraw(int amount) {
         if(amount > 0){
-            return balance -= amount;
+            balance -= amount;
+            return balance;
         }
         return balance;
     }

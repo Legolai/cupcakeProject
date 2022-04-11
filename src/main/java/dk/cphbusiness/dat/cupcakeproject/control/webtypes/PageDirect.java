@@ -1,4 +1,4 @@
-package dk.cphbusiness.dat.cupcakeproject.control.webType;
+package dk.cphbusiness.dat.cupcakeproject.control.webtypes;
 
 public class PageDirect
 {

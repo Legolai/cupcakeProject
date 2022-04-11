@@ -27,7 +27,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<Order> dbOrder;
-        String sql = "insert into `order` (userID, requestedDelivery) values (?,?)";
+        String sql = "insert into order (userID, requestedDelivery) values (?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -37,6 +37,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                 ps.setObject(2, order.getRequestedDelivery());
 
                 int rowsAffected = ps.executeUpdate();
+                ResultSet rs = ps.getResultSet();
 
                 if (rowsAffected == 1)
                 {
@@ -68,7 +69,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 for (DBEntity<OrderDetail> od: orderDetailList) {
                     orderDetail = od.getEntity();
@@ -100,8 +101,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         catch (SQLException ex)
         {
-            ex.printStackTrace();
-            //throw new DatabaseException(ex, "Could not insert the orderdetails into database");
+            throw new DatabaseException(ex, "Could not insert the orderdetails into database");
         }
         return dbOrderDetails;
     }
@@ -239,36 +239,39 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public boolean update(DBEntity<Order> t) throws DatabaseException
     {
-        Logger.getLogger("web").log(Level.INFO, "");
-
-        String sql = "UPDATE `order`" +
-                " SET requestedDelivery = ?, shipped = ?" +
-                " WHERE orderID = ?;";
-
-        try (Connection connection = connectionPool.getConnection())
-        {
-            try (PreparedStatement ps = connection.prepareStatement(sql))
-            {
-                Order order = t.getEntity();
-                ps.setObject(1,order.getRequestedDelivery());
-                ps.setObject(2,order.getShipped());
-                ps.setInt(3,t.getId());
-
-                //Role role = rs.getObject("role", Role.class);
-                int rowsAffected = ps.executeUpdate();
-
-                if (rowsAffected == 1)
-                {
-                    return true;
-                } else
-                {
-                    throw new DatabaseException("The order with id = " + t.getId() + " could not be updated in the database");
-                }
-            }
-        } catch (SQLException ex)
-        {
-            throw new DatabaseException(ex, "Error updating selected order. Something went wrong with the database");
-        }
+//        Logger.getLogger("web").log(Level.INFO, "");
+//
+//        String sql = "UPDATE order" +
+//                "SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?" +
+//                "WHERE orderID = ?;";
+//
+//        try (Connection connection = connectionPool.getConnection())
+//        {
+//            try (PreparedStatement ps = connection.prepareStatement(sql))
+//            {
+//                User user = t.getEntity();
+//                ps.setInt(1,user.getName());
+//                ps.setObject(2,user.getEmail());
+//                ps.setObject(3,user.getPhone());
+//                ps.setObject(4,user.getPassword());
+//                ps.setInt(5,t.getId());
+//
+//                //Role role = rs.getObject("role", Role.class);
+//                int rowsAffected = ps.executeUpdate();
+//
+//                if (rowsAffected == 1)
+//                {
+//                    return true;
+//                } else
+//                {
+//                    throw new DatabaseException("The user with email = " + t.getEntity().getEmail() + " could not be updated in the database");
+//                }
+//            }
+//        } catch (SQLException ex)
+//        {
+//            throw new DatabaseException(ex, "Error updating selected user. Something went wrong with the database");
+//        }
+        return false;
     }
 
     @Override

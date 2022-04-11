@@ -6,10 +6,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +31,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 ps.setString(1, user.getName());
                 ps.setString(2, user.getEmail());
@@ -79,25 +76,9 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
             try (PreparedStatement ps = connection.prepareStatement(sql))
             {
                 ResultSet rs = ps.executeQuery();
-                User newUser;
-                Account newAccount;
-                DBEntity<User> user;
                 while (rs.next())
                 {
-                    int userID = rs.getInt("userID");
-                    String name = rs.getString("name");
-                    String email = rs.getString("email");
-                    String phone = rs.getString("phone");
-                    String password = rs.getString("password");
-                    String role = rs.getString("role");
-                    String address = rs.getString("address");
-                    int balance = rs.getInt("balance");
-
-                    newAccount = new Account(balance);
-                    newUser = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
-                    user = new DBEntity<>(userID, newUser);
-
-                    userList.add(user);
+                    userList.add(createUserEntity(rs));
                 }
             }
         } catch (SQLException ex)
@@ -121,25 +102,11 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
             {
                 ps.setInt(1, id);
                 ResultSet rs = ps.executeQuery();
-                User newUser;
-                Account newAccount;
-                DBEntity<User> user;
+                DBEntity<User> userEntity;
                 if (rs.next())
                 {
-                    int userID = rs.getInt("userID");
-                    String name = rs.getString("name");
-                    String email = rs.getString("email");
-                    String phone = rs.getString("phone");
-                    String password = rs.getString("password");
-                    String role = rs.getString("role");
-                    String address = rs.getString("address");
-                    int balance = rs.getInt("balance");
-
-                    newAccount = new Account(balance);
-                    newUser = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
-                    user = new DBEntity<>(userID, newUser);
-
-                    optionalDBEntity = Optional.of(user);
+                    userEntity = createUserEntity(rs);
+                    optionalDBEntity = Optional.of(userEntity);
                 } else
                 {
                     throw new DatabaseException("User with id: "+id+" was not found");
@@ -147,8 +114,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
             }
         } catch (SQLException ex)
         {
-            ex.printStackTrace();
-//            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
         }
         return optionalDBEntity;
     }
@@ -203,7 +169,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        DBEntity<User> user = null;
+        DBEntity<User> userEntity = null;
 
         String sql = "SELECT * FROM User WHERE email = ? AND password = ?";
 
@@ -214,22 +180,9 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
                 ps.setString(1, email);
                 ps.setString(2, password);
                 ResultSet rs = ps.executeQuery();
-                Account newAccount;
-                User userEntity;
-                if (rs.next())
-                {
-                    int userID = rs.getInt("userID");
-                    String name = rs.getString("name");
-                    String phone = rs.getString("phone");
-                    String role = rs.getString("role");
-                    String address = rs.getString("address");
-                    int balance = rs.getInt("balance");
-
-                    newAccount = new Account(balance);
-                    userEntity = new User(name,email,phone,password,Role.valueOf(role),address,newAccount);
-                    user = new DBEntity<>(userID, userEntity);
-                } else
-                {
+                if (rs.next()) {
+                    userEntity = createUserEntity(rs);
+                } else {
                     throw new DatabaseException("Wrong username or password");
                 }
             }
@@ -237,36 +190,23 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
         {
             throw new DatabaseException(ex, "Error logging in. Something went wrong with the database");
         }
-        return user;
+        return userEntity;
+    }
+
+    @Override
+    public DBEntity<User> createUserEntity(ResultSet rs) throws SQLException {
+        int userID = rs.getInt("userID");
+        String name = rs.getString("name");
+        String email = rs.getString("email");
+        String password = rs.getString("password");
+        String phone = rs.getString("phone");
+        String role = rs.getString("role");
+        String address = rs.getString("address");
+        int balance = rs.getInt("balance");
+
+        Account account = new Account(balance);
+        User user = new User(name, email, phone, password,Role.valueOf(role),address,account);
+        return new DBEntity<>(userID, user);
     }
 
 }
-
-
-//Logger.getLogger("web").log(Level.INFO, "");
-//
-//        User user = null;
-//
-//        String sql = "SELECT * FROM user WHERE username = ? AND password = ?";
-//
-//        try (Connection connection = connectionPool.getConnection())
-//        {
-//            try (PreparedStatement ps = connection.prepareStatement(sql))
-//            {
-//                ps.setString(1, username);
-//                ps.setString(2, password);
-//                ResultSet rs = ps.executeQuery();
-//                if (rs.next())
-//                {
-//                    String role = rs.getString("role");
-//                    user = new User(username, password, role);
-//                } else
-//                {
-//                    throw new DatabaseException("Wrong username or password");
-//                }
-//            }
-//        } catch (SQLException ex)
-//        {
-//            throw new DatabaseException(ex, "Error logging in. Something went wrong with the database");
-//        }
-//        return user;

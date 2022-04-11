@@ -14,14 +14,14 @@ import java.util.logging.Logger;
 public class ConnectionPool
 {
     private HikariDataSource ds;
-    private static String USER = "root";
-    private static String PASSWORD = "root";
-    private static String URL = "jdbc:mysql://localhost:3306/%s";
+    private static String user = "root";
+    private static String password = "root";
+    private static String url = "jdbc:mysql://localhost:3306/%s";
 
 
     public ConnectionPool()
     {
-        this(USER, PASSWORD, URL);
+        this(user, password, url);
     }
 
     public ConnectionPool(DBType dbType)
@@ -37,25 +37,25 @@ public class ConnectionPool
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        String user = appProps.getProperty("USERNAME");
-        String password = appProps.getProperty("PASSWORD");
-        String dbName = dbType.equals(DBType.TEST) ? appProps.getProperty("TEST_DB") : appProps.getProperty("DB") ;
-        String dbUrl = String.format(URL, dbName);
+        String propUser = appProps.getProperty("USERNAME");
+        String propPassword = appProps.getProperty("PASSWORD");
+        String propDbName = dbType.equals(DBType.TEST) ? appProps.getProperty("TEST_DB") : appProps.getProperty("DB") ;
+        String propDbUrl = String.format(url, propDbName);
 
-        setupConnection(user, password, dbUrl);
+        setupConnection(propUser, propPassword, propDbUrl);
     }
 
-    public ConnectionPool(String USER, String PASSWORD, String URL)
+    public ConnectionPool(String user, String password, String url)
     {
         String deployed = System.getenv("DEPLOYED");
         if (deployed != null)
         {
             // Prod: hent variabler fra setenv.sh i Tomcats bin folder
-            USER = System.getenv("JDBC_USER");
-            PASSWORD = System.getenv("JDBC_PASSWORD");
-            URL = System.getenv("JDBC_CONNECTION_STRING");
+            user = System.getenv("JDBC_USER");
+            password = System.getenv("JDBC_PASSWORD");
+            url = System.getenv("JDBC_CONNECTION_STRING");
         }
-        setupConnection(USER, PASSWORD, URL);
+        setupConnection(user, password, url);
     }
 
     private void setupConnection(String user, String password, String url){

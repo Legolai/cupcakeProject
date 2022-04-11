@@ -1,7 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.control.commands;
 
-import dk.cphbusiness.dat.cupcakeproject.control.webType.PageDirect;
-import dk.cphbusiness.dat.cupcakeproject.control.webType.RedirectType;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 
@@ -18,6 +18,6 @@ public class UnprotectedPageCommand extends PageCommand
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
-        return new PageDirect(RedirectType.STAY, getPageName());
+        return new PageDirect(RedirectType.DEFAULT_REDIRECT, getPageName());
     }
 }
