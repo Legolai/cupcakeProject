@@ -57,7 +57,7 @@ interface IDataMapperTest<T>
     default void delete() throws DatabaseException
     {
         IDataMapper<T> dataMapper = getDataMapper();
-        T t = createListOfEntities().get(3);
+        T t = createListOfEntities().get(2);
         DBEntity<T> dbEntity = new DBEntity<>(4, t);
         assertEquals(dbEntity, dataMapper.insert(t));
         assertTrue(dataMapper.delete(dbEntity));

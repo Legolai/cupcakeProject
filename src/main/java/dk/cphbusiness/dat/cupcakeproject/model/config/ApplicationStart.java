@@ -18,11 +18,6 @@ public class ApplicationStart implements ServletContextListener
 {
     private static ConnectionPool connectionPool;
 
-    public ApplicationStart()
-    {
-
-    }
-
     @Override
     public void contextInitialized(ServletContextEvent sce)
     {
