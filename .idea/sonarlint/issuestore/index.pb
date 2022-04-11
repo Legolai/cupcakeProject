@@ -23,8 +23,6 @@ p
 @.idea/libraries/Maven__ch_qos_logback_logback_classic_1_2_11.xml,8/c/8ccbb9388e386e6f3944c782e3d5a9dd5c13aeae
 l
 <.idea/libraries/Maven__mysql_mysql_connector_java_8_0_28.xml,8/c/8c8f7564cfc9443dbe68e938928440aa764cdf28
-O
-src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 a
 1.idea/libraries/Maven__javax_servlet_jstl_1_2.xml,3/0/30f104ae7e6f244bf77daa047bb269e96afe378c
 d
@@ -38,14 +36,12 @@ e
 d
 4.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml,6/2/6284eecedd2d85fb3913164f96df4582210062ba
 I
-src/main/webapp/error.jsp,c/b/cba3df22242d379bdb72d00919d2e8d49101d1bf
-I
 src/main/webapp/login.jsp,8/5/85ee523d01e5e19376db640e846c91bbcb0a1c22
 ‡
 Wsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/exceptions/DatabaseException.java,a/f/afb038941a451aa74409771054ef26f10fc5cb28
 s
 Csrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Logout.java,3/6/3649aaa00a37be9f1a80b57b031e9253eee6f696
-‚
-Rsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/services/Authentication.java,a/7/a703f53f36dc3702f95cab5e2bf019edc5824f77
+„
+Tsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/CupcakeComponent.java,d/8/d8c039a8b40aaf4a0783ba7c0e961b06e31747fa
 x
 Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Role.java,5/4/54c375020ad6ed644bb769e8c02d9315a90ae200
