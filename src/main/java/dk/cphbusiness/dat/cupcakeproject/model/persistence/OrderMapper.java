@@ -5,10 +5,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.Order;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.OrderDetail;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,7 +29,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 ps.setInt(1, order.getUserId());
                 ps.setObject(2, order.getRequestedDelivery());
@@ -68,7 +65,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
         try (Connection connection = connectionPool.getConnection())
         {
-            try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS))
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 for (DBEntity<OrderDetail> od: orderDetails) {
                     orderDetail = od.getEntity();
@@ -107,7 +104,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public List<DBEntity<Order>> getAll() throws DatabaseException
     {
-        return null;
+        return new ArrayList<>();
     }
 
     @Override
@@ -116,7 +113,9 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         return Optional.empty();
     }
 
-    public Optional<List<DBEntity<Order>>> findByUserId(int id) throws DatabaseException
+
+    @Override
+    public Optional<List<DBEntity<Order>>> findByUserId(int userId) throws DatabaseException
     {
         return Optional.empty();
     }

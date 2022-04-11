@@ -3,8 +3,8 @@ package dk.cphbusiness.dat.cupcakeproject.control;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.Command;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.CommandController;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.UnknownCommand;
-import dk.cphbusiness.dat.cupcakeproject.control.webType.PageDirect;
-import dk.cphbusiness.dat.cupcakeproject.control.webType.RedirectType;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.config.ApplicationStart;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class FrontControllerServlet extends HttpServlet
 {
 
-    public static ConnectionPool connectionPool;
+    private static ConnectionPool connectionPool;
 
     @Override
     public void init() throws ServletException
@@ -88,4 +88,7 @@ public class FrontControllerServlet extends HttpServlet
         return "FrontController for application";
     }
 
+    public static ConnectionPool getConnectionPool() {
+        return connectionPool;
+    }
 }

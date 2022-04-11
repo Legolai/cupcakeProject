@@ -35,13 +35,26 @@ e
 5.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_36.xml,4/4/448c004e9fdda2afc7a59a6f0e73f42fb2e8da8b
 d
 4.idea/libraries/Maven__org_hamcrest_hamcrest_2_2.xml,6/2/6284eecedd2d85fb3913164f96df4582210062ba
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302
+M
+src/main/webapp/css/style.css,2/c/2c1f525046eaa5ad3e39cc3d3b2f4c4fab4ff318
+†
+Vsrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/OrderMapperTest.java,0/7/07ffb47b3b4321211ca34f4131be710df860a7d1
+…
+Usrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/DataMapperTest.java,e/1/e19132f2eb341883bc1be0ef0aa4f694dff83455
+…
+Usrc/test/java/dk/cphbusiness/dat/cupcakeproject/model/persistence/UserMapperTest.java,a/7/a7667e469b01fbd283362bb65e88cb8c60023214
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+S
+#src/main/webapp/WEB-INF/kontakt.jsp,9/f/9fd9781129225a3679c1044369417a1705c3da9a
+
+Osrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/webType/PageDirect.java,5/0/50f0811542388a60fc522d8412605761b982b158
+O
+src/main/webapp/WEB-INF/web.xml,2/e/2e22b6edd746fa3dc40ad7276c87c8d87d72a392
 I
-src/main/webapp/login.jsp,8/5/85ee523d01e5e19376db640e846c91bbcb0a1c22
-‡
-Wsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/exceptions/DatabaseException.java,a/f/afb038941a451aa74409771054ef26f10fc5cb28
-s
-Csrc/main/java/dk/cphbusiness/dat/cupcakeproject/control/Logout.java,3/6/3649aaa00a37be9f1a80b57b031e9253eee6f696
-„
-Tsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/CupcakeComponent.java,d/8/d8c039a8b40aaf4a0783ba7c0e961b06e31747fa
-x
-Hsrc/main/java/dk/cphbusiness/dat/cupcakeproject/model/entities/Role.java,5/4/54c375020ad6ed644bb769e8c02d9315a90ae200
+src/main/webapp/error.jsp,c/b/cba3df22242d379bdb72d00919d2e8d49101d1bf
+]
+-src/main/webapp/WEB-INF/tags/pagetemplate.tag,1/7/17918a5675a8e4c47a3d9e44be9f870a33d0ef70

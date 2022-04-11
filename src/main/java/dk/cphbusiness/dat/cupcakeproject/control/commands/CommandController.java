@@ -11,12 +11,11 @@ import java.util.logging.Logger;
 
 public class CommandController
 {
-    private static Map<String, Command> commands;
+    private static CommandController instance = null;
+    private static final Map<String, Command> commands = new HashMap<>();
     private static ConnectionPool connectionPool;
 
-    private static void initCommands()
-    {
-        commands = new HashMap<>();
+    private CommandController(){
         commands.put("index", new UnprotectedPageCommand("index"));
         commands.put("cupcakes-page", new UnprotectedPageCommand("cupcakes"));
         commands.put("kontakt-page", new UnprotectedPageCommand("kontakt"));
@@ -30,6 +29,14 @@ public class CommandController
         commands.put("employee-page", new ProtectedPageCommand("admin", Role.ADMIN));
     }
 
+    public static CommandController getInstance(){
+        if (instance == null) {
+            instance = new CommandController();
+        }
+        return instance;
+    }
+
+
     public static Command fromPath(
             HttpServletRequest request,
             ConnectionPool connPool)
@@ -37,18 +44,19 @@ public class CommandController
         String action = request.getPathInfo().replaceAll("^/+", "");
 
         String msg =  "--> " + action;
-        Logger.getLogger("CommandController").log(Level.SEVERE, msg);
+        String loggerName = "CommandController";
+        Logger.getLogger(loggerName).log(Level.SEVERE, msg);
 
-        if (commands == null)
+        if (commands.size() <= 0)
         {
             connectionPool = connPool;
-            initCommands();
+            getInstance();
             msg = "Commands has been created";
-            Logger.getLogger("CommandController").log(Level.SEVERE, msg);
+            Logger.getLogger(loggerName).log(Level.SEVERE, msg);
         }
         Command command = commands.getOrDefault(action, new UnknownCommand());   // unknowncommand is default
         msg = "Command class" + command.getClass();
-        Logger.getLogger("CommandController").log(Level.SEVERE, msg);
+        Logger.getLogger(loggerName).log(Level.SEVERE, msg);
         return command;
     }
 

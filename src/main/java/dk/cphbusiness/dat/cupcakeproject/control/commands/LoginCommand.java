@@ -1,7 +1,7 @@
 package dk.cphbusiness.dat.cupcakeproject.control.commands;
 
-import dk.cphbusiness.dat.cupcakeproject.control.webType.PageDirect;
-import dk.cphbusiness.dat.cupcakeproject.control.webType.RedirectType;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
+import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
@@ -39,7 +39,7 @@ public class LoginCommand extends UnprotectedPageCommand
         catch (DatabaseException ex)
         {
             request.setAttribute("error", "Wrong username or password!");
-            return new PageDirect(RedirectType.STAY, "login-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "login-page");
         }
     }
 }

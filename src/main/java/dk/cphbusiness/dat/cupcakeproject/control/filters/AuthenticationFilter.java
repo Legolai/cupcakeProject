@@ -33,10 +33,6 @@ public class AuthenticationFilter implements Filter
     }
 
     @Override
-    public void destroy() {
-    }
-
-    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException
     {
         HttpServletRequest req = (HttpServletRequest) request;
@@ -45,11 +41,11 @@ public class AuthenticationFilter implements Filter
         String servletPath = req.getServletPath();
         if (servletPath != null && servletPath.equals("/fc"))
         {
-            Command command = CommandController.fromPath(req, FrontControllerServlet.connectionPool);
+            Command command = CommandController.fromPath(req, FrontControllerServlet.getConnectionPool());
             HttpSession session = req.getSession(false);
-            if (command instanceof ProtectedPageCommand)
+            if (command instanceof ProtectedPageCommand protectedPageCommand)
             {
-                Role roleFromCommand = ((ProtectedPageCommand) command).getRole();
+                Role roleFromCommand = protectedPageCommand.getRole();
                 if (session == null || session.getAttribute("user") == null)
                 {
                     handleIllegalAccess(
@@ -63,7 +59,7 @@ public class AuthenticationFilter implements Filter
                 {
                     DBEntity<User> user = (DBEntity<User>) session.getAttribute("user");
                     Role role = user.getEntity().getRole();
-                    if (role == null || !role.equals(roleFromCommand))
+                    if (role == null || !role.equals(roleFromCommand) || !role.equals(Role.ADMIN))
                     {
                         handleIllegalAccess(
                                 req,
