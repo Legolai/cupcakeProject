@@ -72,4 +72,15 @@ public class OrderMapperTest extends DataMapperTest<Order>
         assertEquals(dbEntity, orderMapper.insert(t));
         assertTrue(orderMapper.findByUserId(dbEntity.getEntity().getUserId()).isPresent());
     }
+
+    @Override
+    @Test
+    public void update() throws DatabaseException
+    {
+        Order t = createListOfEntities().get(0);
+        DBEntity<Order> dbEntity = orderMapper.insert(t);
+        dbEntity.getEntity().setIsPaid(true);
+        assertTrue(orderMapper.update(dbEntity));
+    }
+
 }

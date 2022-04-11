@@ -17,6 +17,7 @@ public class Order
     {
         this.userId = userId;
         this.requestedDelivery = requestedDelivery;
+        created = LocalDateTime.now();
     }
     public Order(int userId, LocalDateTime created, LocalDateTime requestedDelivery, LocalDateTime shipped, List<DBEntity<OrderDetail>> orderDetails, boolean isPaid) {
         this.userId = userId;
@@ -48,7 +49,7 @@ public class Order
     {
         return orderDetails;
     }
-    public boolean isPaid()
+    public boolean getIsPaid()
     {
         return isPaid;
     }
@@ -65,7 +66,7 @@ public class Order
     {
         this.orderDetails = orderDetails;
     }
-    public void setPaid(boolean isPaid) {
+    public void setIsPaid(boolean isPaid) {
         this.isPaid = isPaid;
     }
 }

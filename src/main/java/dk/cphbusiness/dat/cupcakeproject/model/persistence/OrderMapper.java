@@ -26,14 +26,15 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<Order> dbOrder;
-        String sql = "insert into `order` (userID, requestedDelivery) values (?,?)";
+        String sql = "insert into `order` (userID, created, requestedDelivery) values (?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
             {
                 ps.setInt(1, order.getUserId());
-                ps.setObject(2, order.getRequestedDelivery());
+                ps.setObject(2, order.getCreated());
+                ps.setObject(3, order.getRequestedDelivery());
 
                 int rowsAffected = ps.executeUpdate();
 
@@ -52,6 +53,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         catch (SQLException ex)
         {
+            ex.printStackTrace();
             throw new DatabaseException(ex, "Could not insert order into database");
         }
         return dbOrder;
@@ -244,39 +246,39 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public boolean update(DBEntity<Order> t) throws DatabaseException
     {
-//        Logger.getLogger("web").log(Level.INFO, "");
-//
-//        String sql = "UPDATE order" +
-//                "SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?" +
-//                "WHERE orderID = ?;";
-//
-//        try (Connection connection = connectionPool.getConnection())
-//        {
-//            try (PreparedStatement ps = connection.prepareStatement(sql))
-//            {
-//                User user = t.getEntity();
-//                ps.setInt(1,user.getName());
-//                ps.setObject(2,user.getEmail());
-//                ps.setObject(3,user.getPhone());
-//                ps.setObject(4,user.getPassword());
-//                ps.setInt(5,t.getId());
-//
-//                //Role role = rs.getObject("role", Role.class);
-//                int rowsAffected = ps.executeUpdate();
-//
-//                if (rowsAffected == 1)
-//                {
-//                    return true;
-//                } else
-//                {
-//                    throw new DatabaseException("The user with email = " + t.getEntity().getEmail() + " could not be updated in the database");
-//                }
-//            }
-//        } catch (SQLException ex)
-//        {
-//            throw new DatabaseException(ex, "Error updating selected user. Something went wrong with the database");
-//        }
-        return false;
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        String sql = "UPDATE `order`" +
+                " SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?, paid = ?" +
+                " WHERE orderID = ?;";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                Order order = t.getEntity();
+                ps.setInt(1,order.getUserId());
+                ps.setObject(2,order.getCreated());
+                ps.setObject(3,order.getRequestedDelivery());
+                ps.setObject(4,order.getShipped());
+                ps.setBoolean(5,order.getIsPaid());
+                ps.setInt(6,t.getId());
+
+                int rowsAffected = ps.executeUpdate();
+
+                if (rowsAffected == 1)
+                {
+                    return true;
+                } else
+                {
+                    throw new DatabaseException("The order with userID = " + t.getEntity().getUserId() + " and created: " + t.getEntity().getCreated() + " could not be updated in the database");
+                }
+            }
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+            throw new DatabaseException(ex, "Error updating selected order. Something went wrong with the database");
+        }
     }
 
     @Override
