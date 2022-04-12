@@ -15,6 +15,9 @@ Michael og Nicolai - Standard tests kørt og UserMapper og Cupcake...Mapper næs
 **Fredag den 9. april 2022**: \
 Michael og Nicolai - Skift til en 'enkelt' servlet og command pattern.
 
+**Mandag den 11. april 2022**: \
+Michael og Nicolai - merget command pattern ind paa main, og noget clean up
+
 ## Baggrund
 Vi har landet en vigtig opgave fra Olsker Cupcakes. Det er endnu et dybdeøkologisk iværksættereventyr fra Bornholm, som har ramt den helt rigtige opskrift. Et par hipstere fra København har været forbi bageriet, og indsamlet nogle krav og lavet en halvfærdig mockup af en tænkt forside. En mockup er en meget løs skitse, som viser hvordan det færdige website skal se ud. Det er selvfølgelig ikke alt som er med, og som er tænkt igennem, så det er vores opgave at stille spørgsmål til manglende funktionalitet, komme med forslag osv.
 
@@ -60,3 +63,28 @@ I skal også indsætte et link i rapporten til en kort video-demo af jeres færd
 ## MVC arkitektur
 
 ![MVC arkitektur](documentation/mvc.jpg)
+
+
+## temp notes on completed commands
+
+UserMapper:
+ - Login
+ - Logout
+ - Register(insert)
+ - Get all users
+ - Update
+ - find by id `MISSING`
+
+CupcakeMapper:
+ - Insert
+ - Get all `Works, can't get as a list on admin page`
+ - Get selection (top, bottom or all) `MISSING`
+ - Update 
+
+OrderMapper:
+ - Insert
+ - Get all
+ - Find by userID `MISSING`
+ - Update
+
+

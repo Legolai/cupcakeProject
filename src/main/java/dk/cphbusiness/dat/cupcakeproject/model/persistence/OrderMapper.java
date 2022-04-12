@@ -58,7 +58,6 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         return dbOrder;
     }
-
     private List<DBEntity<OrderDetail>> insertOrderDetails(Order order, int orderId) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -201,7 +200,6 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         optionalDBEntityList = Optional.of(list);
         return optionalDBEntityList;
     }
-
     private List<DBEntity<OrderDetail>> getOrderDetailsFromOrderID(int orderId) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
