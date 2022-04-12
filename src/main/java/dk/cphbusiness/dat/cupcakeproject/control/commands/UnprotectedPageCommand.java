@@ -18,6 +18,6 @@ public class UnprotectedPageCommand extends PageCommand
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, getPageName());
+        return new PageDirect(RedirectType.DEFAULT, getPageName());
     }
 }

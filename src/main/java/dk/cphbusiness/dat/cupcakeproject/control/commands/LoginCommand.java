@@ -34,12 +34,12 @@ public class LoginCommand extends UnprotectedPageCommand
             session.setAttribute("user", dbUser);
 
             String pageToShow = "account-page";
-            return new PageDirect(RedirectType.REDIRECT_INDICATOR, pageToShow);
+            return new PageDirect(RedirectType.REDIRECT, pageToShow);
         }
         catch (DatabaseException ex)
         {
             request.setAttribute("error", "Wrong username or password!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "login-page");
+            return new PageDirect(RedirectType.DEFAULT, "login-page");
         }
     }
 }

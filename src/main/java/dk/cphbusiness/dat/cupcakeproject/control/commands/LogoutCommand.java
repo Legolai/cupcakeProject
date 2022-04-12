@@ -23,6 +23,6 @@ public class LogoutCommand extends UnprotectedPageCommand
         if(session != null){
             session.invalidate();
         }
-        return new PageDirect(RedirectType.REDIRECT_INDICATOR, request.getContextPath());
+        return new PageDirect(RedirectType.REDIRECT, request.getContextPath());
     }
 }

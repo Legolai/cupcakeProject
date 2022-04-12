@@ -46,7 +46,7 @@ public class FrontControllerServlet extends HttpServlet
 
             PageDirect view = action.execute(request, response, connectionPool);
 
-            if (view.redirectType.equals(RedirectType.REDIRECT_INDICATOR))
+            if (view.redirectType.equals(RedirectType.REDIRECT))
             {
                 String page = view.pageName;
                 response.sendRedirect(page);

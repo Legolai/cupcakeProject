@@ -33,7 +33,7 @@ public class RegisterCommand extends UnprotectedPageCommand
 
         if(!password.equals(confirmedPassword)){
             request.setAttribute("error", "Confirmed password does not match!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "createAccount-page");
+            return new PageDirect(RedirectType.DEFAULT, "createAccount-page");
         }
 
         try{
@@ -44,12 +44,12 @@ public class RegisterCommand extends UnprotectedPageCommand
 
             session.setAttribute("user", dbUser);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account-page");
+            return new PageDirect(RedirectType.DEFAULT, "account-page");
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Email is already in use!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "createAccount-page");
+            return new PageDirect(RedirectType.DEFAULT, "createAccount-page");
         }
 
     }
