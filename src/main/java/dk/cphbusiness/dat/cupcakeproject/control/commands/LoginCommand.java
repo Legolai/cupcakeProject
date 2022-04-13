@@ -33,13 +33,13 @@ public class LoginCommand extends UnprotectedPageCommand
             HttpSession session = request.getSession();
             session.setAttribute("user", dbUser);
 
-            String pageToShow = "account-page";
+            String pageToShow = "index";
             return new PageDirect(RedirectType.REDIRECT_INDICATOR, pageToShow);
         }
         catch (DatabaseException ex)
         {
             request.setAttribute("error", "Wrong username or password!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "login-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "login");
         }
     }
 }

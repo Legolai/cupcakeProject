@@ -27,20 +27,30 @@ public class GetAllCupcakesCommand extends UnprotectedPageCommand
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
+        String goToPage;
+
+        HttpSession session = request.getSession();
+        boolean temp = (boolean) session.getAttribute("adminGetAllCupcakes");
+        if (temp) {
+            goToPage = "admin";
+        } else {
+            goToPage = "cupcakes";
+        }
 
         try{
             List<DBEntity<CupcakeComponent>> cupcakes = cupcakeMapper.getAll();
 
-            HttpSession session = request.getSession();
-
             session.setAttribute("allCupcakes", cupcakes);
+            if (goToPage.equals("admin")){
+                session.setAttribute("adminGetAllCupcakes", false);
+            }
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all cupcakes!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
         }
     }
 }

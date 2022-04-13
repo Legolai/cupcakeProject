@@ -32,15 +32,15 @@ public class UpdateOrderCommand extends ProtectedPageCommand
             if (orderMapper.update(order)) {
                 HttpSession session = request.getSession();
 
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             } else {
                 request.setAttribute("error", "Update of cupcake could not be completed");
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             }
         } catch (DatabaseException ex) {
             // not needed right?
         }   // should I repeat down here?
         request.setAttribute("error", "Update of cupcake could not be completed");
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
     }
 }

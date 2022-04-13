@@ -25,22 +25,31 @@ public class UpdateCupcakeCommand extends ProtectedPageCommand
     {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
 
-        DBEntity<CupcakeComponent> cupcake = (DBEntity<CupcakeComponent>) request.getAttribute("updateCupcake");
-
+        int id = Integer.parseInt(request.getParameter("updateCupcakeID"));
+        String name = request.getParameter("updateCupcakeName");
+        int price = Integer.parseInt(request.getParameter("updateCupcakePrice"));
+        CupcakeComponentType cupcakeType = CupcakeComponentType.valueOf(request.getParameter("updateCupcakeType"));
+        if (cupcakeType.equals(CupcakeComponentType.TOPPING)) {
+            cupcakeType = CupcakeComponentType.TOPPING;
+        } else {
+            cupcakeType = CupcakeComponentType.BOTTOM;
+        }
+        DBEntity<CupcakeComponent> cupcake = new DBEntity<>(id, new CupcakeComponent(cupcakeType, name, price));
+        cupcake.setDeleted(false);
         try{
             if (cupcakeMapper.update(cupcake)) {
-                HttpSession session = request.getSession();
+                //HttpSession session = request.getSession();
 
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             } else {
                 request.setAttribute("error", "Update of cupcake could not be completed");
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             }
         } catch (DatabaseException ex) {
             // not needed right?
         }   // should I repeat down here?
         request.setAttribute("error", "Update of cupcake could not be completed");
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
 
     }
 }

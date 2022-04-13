@@ -36,11 +36,11 @@ public class InsertOrderCommand extends UnprotectedPageCommand
             Order order = new Order(userId,requestedDelivery);
             DBEntity<Order> dbOrder = orderMapper.insert(order);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "receipt-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "receipt");
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Failed to insert order");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "checkout-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "checkout");
         }
 
     }

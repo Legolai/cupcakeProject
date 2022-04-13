@@ -27,8 +27,8 @@ public class InsertCupcakeCommand extends ProtectedPageCommand
 
         String name = request.getParameter("newCupcakeName");
         int price = Integer.parseInt(request.getParameter("newCupcakePrice"));
-        CupcakeComponentType cupcakeType;
-        if (request.getParameter("newCupcakeType").equals(CupcakeComponentType.TOPPING)) {
+        CupcakeComponentType cupcakeType = CupcakeComponentType.valueOf(request.getParameter("newCupcakeType"));
+        if (cupcakeType.equals(CupcakeComponentType.TOPPING)) {
             cupcakeType = CupcakeComponentType.TOPPING;
         } else {
             cupcakeType = CupcakeComponentType.BOTTOM;
@@ -42,12 +42,12 @@ public class InsertCupcakeCommand extends ProtectedPageCommand
 //            HttpSession session = request.getSession();
 //            session.setAttribute("user", dbUser);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "New cupcake component could not be inserted!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
         }
 
     }

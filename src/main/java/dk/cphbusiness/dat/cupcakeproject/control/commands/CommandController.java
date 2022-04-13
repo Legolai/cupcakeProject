@@ -19,12 +19,21 @@ public class CommandController
         commands.put("kontakt-page", new UnprotectedPageCommand("kontakt"));
         commands.put("omOs-page", new UnprotectedPageCommand("omOs"));
         commands.put("login-page", new UnprotectedPageCommand("login"));
-        commands.put("login-command", new LoginCommand(""));
-        commands.put("logout-command", new LogoutCommand(""));
         commands.put("register-page", new UnprotectedPageCommand("register"));
-        commands.put("register-command", new RegisterCommand(""));
         commands.put("account-page", new ProtectedPageCommand("account", Role.CUSTOMER));
         commands.put("admin-page", new ProtectedPageCommand("admin", Role.ADMIN));
+
+        commands.put("login-command", new LoginCommand(""));
+        commands.put("logout-command", new LogoutCommand(""));
+        commands.put("register-command", new RegisterCommand(""));
+        commands.put("getAllUsers-command", new GetAllUsersCommand(""));
+        commands.put("updateUser-command", new UpdateUserCommand(""));
+        commands.put("insertCupcake-command", new InsertCupcakeCommand(""));
+        commands.put("getAllCupcakes-command", new GetAllCupcakesCommand(""));
+        commands.put("updateCupcake-command", new UpdateCupcakeCommand(""));
+        commands.put("insertOrder-command", new InsertOrderCommand(""));
+        commands.put("getAllOrders-command", new GetAllOrders(""));
+        commands.put("updateOrder-command", new UpdateOrderCommand(""));
     }
 
     public static CommandController getInstance(){

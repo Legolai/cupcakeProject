@@ -218,6 +218,8 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
 
                 if (rs.next())
                 {
+                    System.out.println("times in order detail");
+
                     int orderDetailID = rs.getInt("orderDetailID");
                     int orderNumber = rs.getInt("orderNumber");
                     int quantityOrdered = rs.getInt("quantityOrdered");

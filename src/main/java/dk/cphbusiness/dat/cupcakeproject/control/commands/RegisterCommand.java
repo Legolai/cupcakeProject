@@ -44,12 +44,12 @@ public class RegisterCommand extends UnprotectedPageCommand
 
             session.setAttribute("user", dbUser);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "index");
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Email is already in use!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "createAccount-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "register");
         }
 
     }
