@@ -5,49 +5,41 @@ import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.*;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
+import dk.cphbusiness.dat.cupcakeproject.model.persistence.CupcakeComponentMapper;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.OrderMapper;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
-public class InsertOrderCommand extends UnprotectedPageCommand
+public class AccountPageCommand extends ProtectedPageCommand
 {
-    public InsertOrderCommand(String pageName)
+    public AccountPageCommand(String pageName)
     {
-        super(pageName);
+        super(pageName, Role.CUSTOMER);
     }
 
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
-
-        int userId = Integer.parseInt(request.getParameter("userID"));
-        LocalDateTime requestedDelivery = LocalDateTime.parse(request.getParameter("requestedDeliveryDate"));
-        boolean isPaid = false;
-        if (request.getParameter("isPaid").equals("isPaid")) {
-            isPaid = true;
-        }
-
-        List<CartItem> cart = (List<CartItem>) request.getAttribute("cart");
-        for (CartItem item: cart) {
-
-        }
+        HttpSession session = request.getSession();
+        DBEntity<User> user = (DBEntity<User>) session.getAttribute("user");
 
         try{
-            Order order = new Order(userId,requestedDelivery);
-            order.setIsPaid(isPaid);
-            orderMapper.insert(order);
+            Optional<List<DBEntity<Order>>> orders = orderMapper.findByUserId(user.getId());
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "receipt");
+            session.setAttribute("userOrders", orders.get());
+
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
+
 
         } catch (DatabaseException ex) {
-            request.setAttribute("error", "Failed to insert order");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "checkout");
+            request.setAttribute("error", "Could not get all your orders!");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
         }
 
     }

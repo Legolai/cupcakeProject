@@ -100,7 +100,7 @@
 
     <h3>Her er listen over alle bruger</h3>
 
-      <input type="button" id="toggleUserTableDisplay" value="Vis" onclick="toggleUserTable();"><br>
+      <input type="button" id="toggleUserTableDisplay" value="Vis" onclick="toggleUserTable();">
       <a href="${pageContext.request.contextPath}/fc/getAllUsers-command">opdater</a>
       <div id="userTable" style="display: none">
           <table>
@@ -122,7 +122,7 @@
 
       <br><br>
     <h3>Her er listen over alle ordre</h3>
-      <input type="button" id="toggleOrderTableDisplay" value="Vis" onclick="toggleOrderTable();"><br>
+      <input type="button" id="toggleOrderTableDisplay" value="Vis" onclick="toggleOrderTable();">
       <a href="${pageContext.request.contextPath}/fc/getAllOrders-command">opdater</a>
       <div id="orderTable" style="display: none">
           <table>
@@ -141,13 +141,13 @@
               </c:forEach>
           </table>
           <br>
-          <p>Order detaljer: (NOTE: Der er et problem i ordermapper der gør så det rigtige antal orderDetail ikke er her)</p>
+          <p>Order detaljer: </p>
           <table>
               <c:forEach items="${sessionScope.allOrders}" var="order">
               <table>
                   <tr><td>ID</td><td>orderId</td><td>toppingId</td><td>bottomId</td>
                       <td>quantity</td><td>comments</td></tr>
-                <c:forEach items="${order.entity.orderDetails}" var="orderDetails">
+                <c:forEach items="${order.getEntity().getOrderDetails()}" var="orderDetails">
                   <tr>
                       <td>${orderDetails.id}</td>
                       <td>${orderDetails.entity.orderId}</td>
@@ -165,16 +165,17 @@
 
       <br><br>
     <h3>Her er listen over alle cupcakes</h3>
-      <input type="button" id="toggleCupcakesTableDisplay" value="Vis" onclick="toggleCupcakeTable();"><br>
+      <input type="button" id="toggleCupcakesTableDisplay" value="Vis" onclick="toggleCupcakeTable();">
 
       <c:set var="adminGetAllCupcakes" value="${true}" scope="session"/>
       <a href="${pageContext.request.contextPath}/fc/getAllCupcakes-command">opdater</a>
       <div id="cupcakeTable" style="display: none">
           <table>
               <tr>
-                  <th onclick="sortTable(0)">componentName</th>
-                  <th onclick="sortTable(1)">componentType</th>
-                  <th onclick="sortTable(2)">componentPrice</th>
+                  <th onclick="sortTable(0)">ID</th>
+                  <th onclick="sortTable(1)">componentName</th>
+                  <th onclick="sortTable(2)">componentType</th>
+                  <th onclick="sortTable(3)">componentPrice</th>
               </tr>
               <c:forEach items="${sessionScope.allCupcakes}" var="cupcake">
                   <tr>
@@ -216,9 +217,35 @@
             <label for="updateTOPPING">Top</label><br>
             <input type="radio" id="updateBOTTOM" name="updateCupcakeType" value="BOTTOM">
             <label for="updateBOTTOM">Bund</label><br>
-          <input type="submit"  value="indsæt"/>
+          <input type="submit"  value="opdater"/>
       </form>
 
+      <br><br>
+      <h3>Lav en ændring på en bruger</h3>
+      <form action="${pageContext.request.contextPath}/fc/updateUserByAdmin-command" method="post">
+          <label for="updateUserID">ID: </label>
+          <input type="text" id="updateUserID" name="updateUserID"/>
+          <label for="updateUserBalance">Balance: </label>
+          <input type="text" id="updateUserBalance" name="updateUserBalance"/>
+          <input type="submit"  value="opdater"/>
+      </form>
+
+      <h3>Lav en ændring på en Order</h3>
+      <form action="${pageContext.request.contextPath}/fc/updateOrder-command" method="post">
+          <label for="updateOrderID">ID: </label>
+          <input type="text" id="updateOrderID" name="updateOrderID"/>
+          <p>Shipped? </p>
+            <input type="radio" id="yes" name="updateShipped" value="true">
+            <label for="yes">Ja</label><br>
+            <input type="radio" id="no" name="updateShipped" value="false">
+            <label for="no">Nej</label><br>
+          <p>isPaid? </p>
+            <input type="radio" id="true" name="updateIsPaid" value="true">
+            <label for="true">Sandt</label><br>
+            <input type="radio" id="false" name="updateIsPaid" value="false">
+            <label for="false">Falsk</label><br>
+          <input type="submit"  value="opdater"/>
+      </form>
 
 
   </jsp:body>

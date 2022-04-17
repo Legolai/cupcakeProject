@@ -14,6 +14,14 @@
             x.style.display = "none";
         }
     }
+    function toggleOrderTable() {
+        var x = document.getElementById("orderTable");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+        } else {
+            x.style.display = "none";
+        }
+    }
 </script>
 
 <t:pagetemplate>
@@ -49,10 +57,44 @@
 
 
 
-
         <br><br>
         <h3>Her er listen over hvilke ordre du har: </h3>
-
+        <input type="button" id="toggleOrderTableDisplay" value="Vis" onclick="toggleOrderTable();">
+        <a href="${pageContext.request.contextPath}/fc/getAllOrders-command">opdater</a>
+        <div id="orderTable" style="display: none">
+            <table>
+                <tr><td>orderId</td><td>created</td><td>requested delivery date</td>
+                    <td>shipped</td><td>is paid?</td></tr>
+                <c:forEach items="${sessionScope.userOrders}" var="order">
+                    <tr>
+                        <td>${order.id}</td>
+                        <td>${order.entity.created}</td>
+                        <td>${order.entity.requestedDelivery}</td>
+                        <td>${order.entity.shipped}</td>
+                        <td>${order.entity.isPaid}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <br>
+            <p>Order detaljer: </p>
+            <table>
+                <c:forEach items="${sessionScope.userOrders}" var="order">
+                    <table>
+                        <tr><td>orderId</td><td>toppingId</td><td>bottomId</td>
+                            <td>quantity</td><td>comments</td></tr>
+                        <c:forEach items="${order.getEntity().getOrderDetails()}" var="orderDetails">
+                            <tr>
+                                <td>${orderDetails.entity.orderId}</td>
+                                <td>${orderDetails.entity.toppingId}</td>
+                                <td>${orderDetails.entity.bottomId}</td>
+                                <td>${orderDetails.entity.quantity}</td>
+                                <td>${orderDetails.entity.comments}</td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </c:forEach>
+            </table>
+        </div>
 
 
 

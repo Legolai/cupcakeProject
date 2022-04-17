@@ -14,12 +14,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
-public class UpdateUserCommand extends ProtectedPageCommand
+public class UpdateUserByAdminCommand extends ProtectedPageCommand
 {
-    public UpdateUserCommand(String pageName)
+    public UpdateUserByAdminCommand(String pageName)
     {
-        super(pageName, Role.CUSTOMER);
+        super(pageName, Role.ADMIN);
     }
 
     @Override
@@ -27,36 +28,26 @@ public class UpdateUserCommand extends ProtectedPageCommand
     {
         UserMapper userMapper = new UserMapper(connectionPool);
 
-        HttpSession session = request.getSession();
-        DBEntity<User> user = (DBEntity<User>) session.getAttribute("updateUser");
-        String goToPage;
-        if (user.getEntity().getRole().equals(Role.CUSTOMER)) {
-            goToPage = "account";
-            System.out.println("hello from role customer updateUserCommand");
-        } else {
-            goToPage = "admin";
-        }
-        user.getEntity().setName(request.getParameter("updateName"));
-        user.getEntity().setEmail(request.getParameter("updateEmail"));
-        user.getEntity().setAddress(request.getParameter("updateAddress"));
 
+        Optional<DBEntity<User>> userFromDB = userMapper.findById(Integer.parseInt(request.getParameter("updateUserID")));
+        DBEntity<User> dbUser = userFromDB.get();
+        int bal = dbUser.getEntity().getAccount().getBalance();
+        dbUser.getEntity().getAccount().withdraw(bal);
+        dbUser.getEntity().getAccount().deposit(Integer.parseInt(request.getParameter("updateUserBalance")));
 
         try{
-            if (userMapper.update(user)) {
-                //HttpSession session = request.getSession();
+            if (userMapper.update(dbUser)) {
 
-                session.setAttribute("user", user);
-
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             } else {
                 request.setAttribute("error", "Update of user could not be completed");
-                return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+                return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             }
 
         } catch (DatabaseException ex) {
             // not needed right?
         }   // should I repeat down here?
         request.setAttribute("error", "Update of user could not be completed");
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
     }
 }

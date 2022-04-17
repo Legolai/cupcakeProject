@@ -97,15 +97,15 @@ UserMapper:
 - Logout
 - Register(insert)
 - Get all users
-- Update `user can, Admin can ikke. 1/2 MISSING`
+- Update
 
 CupcakeMapper:
 - Insert
-- Get all  
+- Get all
 - Update
 
 OrderMapper:
 - Insert `MISSING`
-- Get all
-- Update `MISSING`
+- Get all 
+- Update
 

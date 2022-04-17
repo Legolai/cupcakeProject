@@ -58,7 +58,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         return dbOrder;
     }
-    private List<DBEntity<OrderDetail>> insertOrderDetails(Order order, int orderId) throws DatabaseException
+    public List<DBEntity<OrderDetail>> insertOrderDetails(Order order, int orderId) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
@@ -152,7 +152,45 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
     @Override
     public Optional<DBEntity<Order>> findById(int id) throws DatabaseException
     {
-        return Optional.empty();
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        Optional<DBEntity<Order>> optionalDBEntity = Optional.empty();
+        DBEntity<Order> dbOrder;
+        String sql = "SELECT * FROM `order` WHERE orderID = ?";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql))
+            {
+                ps.setInt(1, id);
+                ResultSet rs = ps.executeQuery();
+                Order order;
+
+                if (rs.next())
+                {
+                    int orderID = rs.getInt("orderID");
+                    int userID = rs.getInt("userID");
+                    LocalDateTime created = (LocalDateTime) rs.getObject("created");
+                    LocalDateTime requestedDelivery = (LocalDateTime) rs.getObject("requestedDelivery");
+                    LocalDateTime shipped = (LocalDateTime) rs.getObject("shipped");
+                    boolean isPaid = rs.getBoolean("paid");
+
+                    List<DBEntity<OrderDetail>> orderDetails = getOrderDetailsFromOrderID(orderID);
+
+                    order = new Order(userID, created, requestedDelivery, shipped, orderDetails, isPaid);
+                    dbOrder = new DBEntity<>(orderID, order);
+                } else
+                {
+                    throw new DatabaseException("Order with userID: " + id + " was not found");
+                }
+            }
+        }
+        catch (SQLException ex)
+        {
+            throw new DatabaseException(ex, "Error finding user by id. Something went wrong with the database");
+        }
+        optionalDBEntity = Optional.of(dbOrder);
+        return optionalDBEntity;
     }
 
     @Override
@@ -216,7 +254,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                 OrderDetail orderDetail;
                 DBEntity<OrderDetail> dbOrderDetail;
 
-                if (rs.next())
+                while (rs.next())
                 {
                     System.out.println("times in order detail");
 
@@ -230,9 +268,6 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
                     orderDetail = new OrderDetail(toppingID, bottomID, quantityOrdered, orderNumber, comments);
                     dbOrderDetail = new DBEntity<>(orderDetailID, orderDetail);
                     orderDetailEntityList.add(dbOrderDetail);
-                } else
-                {
-                    throw new DatabaseException("Orderdetail with orderNumber: " + orderId + " was not found");
                 }
             }
         }

@@ -12,7 +12,9 @@ import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class UpdateOrderCommand extends ProtectedPageCommand
 {
@@ -26,11 +28,25 @@ public class UpdateOrderCommand extends ProtectedPageCommand
     {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
 
-        DBEntity<Order> order = (DBEntity<Order>) request.getAttribute("updateOrder");
+        Optional<DBEntity<Order>> orderFromDB = orderMapper.findById(Integer.parseInt(request.getParameter("updateOrderID")));
+        DBEntity<Order> order = orderFromDB.get();
+        if (request.getParameter("updateShipped").equals("true"))
+        {
+            order.getEntity().setShipped(LocalDateTime.now());
+        } else
+        {
+            order.getEntity().setShipped(null);
+        }
+        if (request.getParameter("updateIsPaid").equals("true"))
+        {
+            order.getEntity().setIsPaid(true);
+        } else
+        {
+            order.getEntity().setIsPaid(false);
+        }
 
         try{
             if (orderMapper.update(order)) {
-                HttpSession session = request.getSession();
 
                 return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
             } else {

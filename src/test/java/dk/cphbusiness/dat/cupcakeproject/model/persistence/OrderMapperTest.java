@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -82,5 +83,27 @@ public class OrderMapperTest extends DataMapperTest<Order>
         dbEntity.getEntity().setIsPaid(true);
         assertTrue(orderMapper.update(dbEntity));
     }
+
+    @Test
+    public void getOrder() throws DatabaseException
+    {
+        Optional<List<DBEntity<Order>>> optionalDBOrder = orderMapper.findByUserId(1);
+        assertTrue(optionalDBOrder.isPresent());
+
+        List<DBEntity<Order>> dbOrders = optionalDBOrder.get();
+
+        DBEntity<Order> dbOrder = dbOrders.get(0);
+        assertEquals(3,dbOrder.getEntity().getOrderDetails().size());
+
+//        Order t = createListOfEntities().get(0);
+//        DBEntity<Order> dbEntity = orderMapper.insert(t);
+//        Order t2 = createListOfEntities().get(1);
+//        DBEntity<Order> dbEntity2 = orderMapper.insert(t2);
+//
+//        List<DBEntity<Order>> lis
+
+
+    }
+
 
 }
