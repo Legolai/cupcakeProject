@@ -1,6 +1,10 @@
 package dk.cphbusiness.dat.cupcakeproject.control.commands;
 
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.actions.*;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.AccountPageCommand;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.AdminPageCommand;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.CupcakesPageCommand;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.UnprotectedPageCommand;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -19,6 +23,7 @@ public class CommandController
         commands.put("kontakt-page", new UnprotectedPageCommand("kontakt"));
         commands.put("omOs-page", new UnprotectedPageCommand("omOs"));
         commands.put("login-page", new UnprotectedPageCommand("login"));
+        commands.put("cart-page", new UnprotectedPageCommand("cart"));
         commands.put("register-page", new UnprotectedPageCommand("register"));
         commands.put("account-page", new AccountPageCommand("account"));
         commands.put("admin-page", new AdminPageCommand("admin"));
@@ -26,12 +31,14 @@ public class CommandController
         commands.put("login-command", new LoginCommand(""));
         commands.put("logout-command", new LogoutCommand(""));
         commands.put("register-command", new RegisterCommand(""));
+        commands.put("addToCart-command", new AddToCartCommaned("cupcakes"));
+        commands.put("removeFromCart-command", new RemoveFromCartCommand("cart"));
         commands.put("getAllUsers-command", new GetAllUsersCommand(""));
         commands.put("updateUser-command", new UpdateUserCommand(""));
         commands.put("insertCupcake-command", new InsertCupcakeCommand(""));
         commands.put("getAllCupcakes-command", new GetAllCupcakesCommand(""));
         commands.put("updateCupcake-command", new UpdateCupcakeCommand(""));
-        commands.put("insertOrder-command", new InsertOrderCommand(""));
+        commands.put("checkout-command", new CheckOutCommand(""));
         commands.put("getAllOrders-command", new GetAllOrders(""));
         commands.put("updateOrder-command", new UpdateOrderCommand(""));
         commands.put("updateUserByAdmin-command", new UpdateUserByAdminCommand(""));

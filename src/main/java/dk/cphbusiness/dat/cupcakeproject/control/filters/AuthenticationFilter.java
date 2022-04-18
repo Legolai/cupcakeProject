@@ -2,7 +2,7 @@ package dk.cphbusiness.dat.cupcakeproject.control.filters;
 
 import dk.cphbusiness.dat.cupcakeproject.control.commands.Command;
 import dk.cphbusiness.dat.cupcakeproject.control.commands.CommandController;
-import dk.cphbusiness.dat.cupcakeproject.control.commands.ProtectedPageCommand;
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.ProtectedPageCommand;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
@@ -20,15 +20,14 @@ public class AuthenticationFilter implements Filter
     private enum FailingStrategy
     {
         REDIRECT_TO_LOGIN,
+        REDIRECT_TO_HOME,
         HARD_ERROR
     }
 
-    private ServletContext context;
-
     @Override
-    public void init(FilterConfig fConfig) throws ServletException {
-        this.context = fConfig.getServletContext();
-        this.context.log("AuthenticationFilter initialized");
+    public void init(FilterConfig fConfig) {
+        ServletContext context = fConfig.getServletContext();
+        context.log("AuthenticationFilter initialized");
     }
 
     @Override
@@ -50,7 +49,7 @@ public class AuthenticationFilter implements Filter
                     handleIllegalAccess(
                             req,
                             res,
-                            FailingStrategy.HARD_ERROR,
+                            FailingStrategy.REDIRECT_TO_LOGIN,
                             "You are not authenticated. Please login first",
                             401);
                     return;
@@ -58,12 +57,12 @@ public class AuthenticationFilter implements Filter
                 {
                     DBEntity<User> user = (DBEntity<User>) session.getAttribute("user");
                     Role role = user.getEntity().getRole();
-                    if (role == null || !role.equals(roleFromCommand) || !role.equals(Role.ADMIN))
+                    if (role == null || !(role.equals(Role.ADMIN) || role.equals(roleFromCommand)))
                     {
                         handleIllegalAccess(
                                 req,
                                 res,
-                                FailingStrategy.REDIRECT_TO_LOGIN,
+                                FailingStrategy.REDIRECT_TO_HOME,
                                 "Attempt to call a resource you are not authorized to view ",
                                 403);
                         return;
@@ -91,9 +90,11 @@ public class AuthenticationFilter implements Filter
         if (fs == FailingStrategy.REDIRECT_TO_LOGIN)
         {
             req.setAttribute("errormessage", msg);
-            req.getRequestDispatcher("/login.jsp").forward(req, res);
-        } else
-        {
+            req.getRequestDispatcher("/WEB-INF/login.jsp").forward(req, res);
+        } else if (fs == FailingStrategy.REDIRECT_TO_HOME) {
+            req.setAttribute("errormessage", msg);
+            req.getRequestDispatcher("/WEB-INF/index.jsp").forward(req, res);
+        } else {
             res.sendError(errCode);
         }
     }

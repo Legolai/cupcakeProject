@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page errorPage="../error.jsp" isErrorPage="false" %>
+<%@page errorPage="../error.jsp" %>
 
 
 <script>
@@ -43,7 +43,6 @@
         <br>
         <button onclick="toggleForm()">Klik her for at ændre personlig information</button><br>
         <div id="changeUserForm" style="display: none">
-            <c:set var="updateUser" value="${sessionScope.user}" scope="session"/>
             <form action="${pageContext.request.contextPath}/fc/updateUser-command" method="post">
                 <label for="updateName">Navn: </label>
                 <input type="text" id="updateName" name="updateName" value=${sessionScope.user.getEntity().getName()}>
@@ -65,7 +64,7 @@
             <table>
                 <tr><td>orderId</td><td>created</td><td>requested delivery date</td>
                     <td>shipped</td><td>is paid?</td></tr>
-                <c:forEach items="${sessionScope.userOrders}" var="order">
+                <c:forEach items="${requestScope.userOrders}" var="order">
                     <tr>
                         <td>${order.id}</td>
                         <td>${order.entity.created}</td>
@@ -78,7 +77,7 @@
             <br>
             <p>Order detaljer: </p>
             <table>
-                <c:forEach items="${sessionScope.userOrders}" var="order">
+                <c:forEach items="${requestScope.userOrders}" var="order">
                     <table>
                         <tr><td>orderId</td><td>toppingId</td><td>bottomId</td>
                             <td>quantity</td><td>comments</td></tr>

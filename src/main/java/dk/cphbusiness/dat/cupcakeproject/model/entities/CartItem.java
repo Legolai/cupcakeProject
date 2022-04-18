@@ -43,6 +43,10 @@ public class CartItem
         this.quantity = quantity;
     }
 
+    public int getPiecePrice(){
+        return topping.getEntity().getComponentPrice() + bottom.getEntity().getComponentPrice();
+    }
+
     public int getTotalPrice(){
         return quantity * (topping.getEntity().getComponentPrice() + bottom.getEntity().getComponentPrice());
     }
@@ -51,8 +55,7 @@ public class CartItem
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!(o instanceof CartItem)) return false;
-        CartItem cartItem = (CartItem) o;
+        if (!(o instanceof CartItem cartItem)) return false;
         return getTopping().equals(cartItem.getTopping()) && getBottom().equals(cartItem.getBottom()) && getComments().equals(cartItem.getComments());
     }
 

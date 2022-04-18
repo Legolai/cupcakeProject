@@ -29,26 +29,36 @@
 
         <h3>Lav din egen cupcake her</h3>
 
-        <h3>Her er listen over alle cupcakes</h3>
-        <input type="button" id="toggleCupcakesTableDisplay" value="Vis" onclick="toggleCupcakeTable();">
-
-        <c:set var="allCupcakes" value="${true}" scope="session"/>
-        <div id="cupcakeTable" style="display: none">
-            <table>
-                <tr>
-                    <th onclick="sortTable(0)">componentName</th>
-                    <th onclick="sortTable(1)">componentType</th>
-                    <th onclick="sortTable(2)">componentPrice</th>
-                </tr>
-                <c:forEach items="${sessionScope.cupcakes}" var="cupcake">
-                    <tr>
-                        <td>${cupcake.entity.componentName}</td>
-                        <td>${cupcake.entity.componentType}</td>
-                        <td>${cupcake.entity.componentPrice}</td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </div>
+        <form action="${pageContext.request.contextPath}/fc/addToCart-command" method="post">
+            <div class="row">
+                <div class="col">
+                    <label class="form-label" for="top-selection">Topping</label>
+                    <select id="top-selection" name="topping" class="form-select" required>
+                        <option disabled selected>Vælg en topping</option>
+                        <c:forEach items="${applicationScope.toppings}" var="topping">
+                            <option value="${topping.getId()}">${topping.getEntity().getComponentName()} - DKK ${topping.getEntity().getComponentPrice()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="form-label" for="bottom-selection">Bund</label>
+                    <select id="bottom-selection" name="bottom" class="form-select" required>
+                        <option disabled selected>Vælg en bund</option>
+                        <c:forEach items="${applicationScope.bottoms}" var="bottom">
+                            <option value="${bottom.getId()}">${bottom.getEntity().getComponentName()} - DKK ${bottom.getEntity().getComponentPrice()}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class="col">
+                    <label class="form-label" for="quantity">Antal</label>
+                    <input type="number" class="form-control" id="quantity" min="1" max="99" name="quantity" required>
+                </div>
+                <div class="col">
+                    <label class="form-label"></label>
+                    <input class="btn btn-primary" type="submit">
+                </div>
+            </div>
+        </form>
 
 
 

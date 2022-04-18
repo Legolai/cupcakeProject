@@ -15,8 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class OrderMapperTest extends DataMapperTest<Order>
-{
+public class OrderMapperTest extends DataMapperTest<Order> {
     private static OrderMapper orderMapper;
 
     @BeforeAll
@@ -27,37 +26,35 @@ public class OrderMapperTest extends DataMapperTest<Order>
 
 
     @Override
-    public IDataMapper<Order> getDataMapper()
-    {
+    public IDataMapper<Order> getDataMapper() {
         return orderMapper;
     }
 
     @Override
-    public List<Order> createListOfEntities()
-    {
+    public List<Order> createListOfEntities() {
         List<Order> orders = new ArrayList<>();
 
         Order order1 = new Order(1, LocalDateTime.now());
         List<DBEntity<OrderDetail>> orderDetails = new ArrayList<>();
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 1, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 2, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(3, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 2, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(3, 1, 3)));
         order1.setOrderDetails(orderDetails);
         orders.add(order1);
 
         Order order2 = new Order(2, LocalDateTime.now());
         orderDetails = new ArrayList<>();
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 1, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 2, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(3, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 2, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(3, 1, 3)));
         order2.setOrderDetails(orderDetails);
         orders.add(order2);
 
         Order order3 = new Order(3, LocalDateTime.now());
         orderDetails = new ArrayList<>();
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 1, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(1, 2, 3)));
-        orderDetails.add(new DBEntity<>(0,new OrderDetail(3, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 1, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(1, 2, 3)));
+        orderDetails.add(new DBEntity<>(0, new OrderDetail(3, 1, 3)));
         order3.setOrderDetails(orderDetails);
         orders.add(order3);
 
@@ -65,8 +62,7 @@ public class OrderMapperTest extends DataMapperTest<Order>
     }
 
     @Test
-    void findByUserId() throws DatabaseException
-    {
+    void findByUserId() throws DatabaseException {
         Order t = createListOfEntities().get(2);
         DBEntity<Order> dbEntity = new DBEntity<>(4, t);
         assertTrue(orderMapper.findByUserId(2).isPresent());
@@ -76,8 +72,7 @@ public class OrderMapperTest extends DataMapperTest<Order>
 
     @Override
     @Test
-    public void update() throws DatabaseException
-    {
+    public void update() throws DatabaseException {
         Order t = createListOfEntities().get(0);
         DBEntity<Order> dbEntity = orderMapper.insert(t);
         dbEntity.getEntity().setIsPaid(true);
@@ -85,15 +80,14 @@ public class OrderMapperTest extends DataMapperTest<Order>
     }
 
     @Test
-    public void getOrder() throws DatabaseException
-    {
+    public void getOrder() throws DatabaseException {
         Optional<List<DBEntity<Order>>> optionalDBOrder = orderMapper.findByUserId(1);
         assertTrue(optionalDBOrder.isPresent());
 
         List<DBEntity<Order>> dbOrders = optionalDBOrder.get();
 
         DBEntity<Order> dbOrder = dbOrders.get(0);
-        assertEquals(3,dbOrder.getEntity().getOrderDetails().size());
+        assertEquals(3, dbOrder.getEntity().getOrderDetails().size());
 
 //        Order t = createListOfEntities().get(0);
 //        DBEntity<Order> dbEntity = orderMapper.insert(t);

@@ -1,4 +1,4 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.pages;
 
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
@@ -9,38 +9,35 @@ import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.OrderMapper;
-import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 
-public class GetAllOrders extends ProtectedPageCommand
+public class AccountPageCommand extends ProtectedPageCommand
 {
-    public GetAllOrders(String pageName)
+    public AccountPageCommand(String pageName)
     {
-        super(pageName, Role.ADMIN);
+        super(pageName, Role.CUSTOMER);
     }
 
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
+        HttpSession session = request.getSession();
+        DBEntity<User> user = (DBEntity<User>) session.getAttribute("user");
 
         try{
-            List<DBEntity<Order>> orders = orderMapper.getAll();
+            Optional<List<DBEntity<Order>>> orders = orderMapper.findByUserId(user.getId());
+            orders.ifPresent(dbEntities -> request.setAttribute("userOrders", dbEntities));
 
-            HttpSession session = request.getSession();
-
-            session.setAttribute("allOrders", orders);
-
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
-
-
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
         } catch (DatabaseException ex) {
-            request.setAttribute("error", "Could not get all orders!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            request.setAttribute("error", "Could not get all your orders!");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
         }
 
     }

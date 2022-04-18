@@ -13,4 +13,27 @@
         <location>/error.jsp</location>
     </error-page>
 
+    <filter>
+        <filter-name>filter-Authentication</filter-name>
+        <filter-class>dk.cphbusiness.dat.cupcakeproject.control.filters.AuthenticationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>filter-Authentication</filter-name>
+        <url-pattern>/fc/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <description>ApplicationStart</description>
+        <listener-class>dk.cphbusiness.dat.cupcakeproject.model.config.ApplicationStart</listener-class>
+    </listener>
+    <listener>
+        <description>SessionListener</description>
+        <listener-class>dk.cphbusiness.dat.cupcakeproject.control.listeners.SessionListener</listener-class>
+    </listener>
+    <listener>
+        <description>SessionListener</description>
+        <listener-class>dk.cphbusiness.dat.cupcakeproject.control.listeners.CupcakeComponentListener</listener-class>
+    </listener>
+
 </web-app>

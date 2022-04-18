@@ -1,5 +1,6 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.actions;
 
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.UnprotectedPageCommand;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;

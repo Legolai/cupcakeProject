@@ -1,4 +1,6 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.pages;
+
+import dk.cphbusiness.dat.cupcakeproject.control.commands.Command;
 
 public abstract class PageCommand implements Command
 {

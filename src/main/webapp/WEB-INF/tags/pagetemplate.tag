@@ -21,8 +21,8 @@
 <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="index.jsp">
-                <img src="${pageContext.request.contextPath}/images/olskerCupcakes.png" width="400px;" class="img-fluid"/>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}">
+                <img alt="logo" src="${pageContext.request.contextPath}/images/olskerCupcakes.png" width="258" class="img-fluid"/>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,11 +34,27 @@
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/cupcakes-page">Cupcakes</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/omOs-page">Om Os</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/kontakt-page">Kontakt</a>
+                    <a class="nav-item nav-link position-relative" href="${pageContext.request.contextPath}/fc/cart-page">kurv
+                        <c:if test="${sessionScope.cart.getCartItems().size() != 0}">
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    ${sessionScope.cart.getCartItems().size()}
+                            </span>
+                        </c:if>
+                    </a>
                     <c:if test="${sessionScope.user == null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/login-page">Login</a>
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/fc/logout-command">Log out</a>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    ${sessionScope.user.getEntity().getEmail()}
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><div class="dropdown-item" >Saldo: ${sessionScope.user.getEntity().getAccount().getBalance()} </div></li>
+                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/fc/account-page">Min profile</a></li>
+                                <li><a class="dropdown-item" href="${pageContext.request.contextPath}/fc/logout-command">Log out</a></li>
+                            </ul>
+                        </div>
                     </c:if>
                 </div>
             </div>
@@ -71,7 +87,6 @@
 
 </div>
 
-</div>
 
 <!-- Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

@@ -1,34 +1,28 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.pages;
 
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponent;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.CupcakeComponentMapper;
-import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class CupcakesPageCommand extends UnprotectedPageCommand
-{
-    public CupcakesPageCommand(String pageName)
-    {
+public class CupcakesPageCommand extends UnprotectedPageCommand {
+    public CupcakesPageCommand(String pageName) {
         super(pageName);
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
 
-        try{
+        try {
             List<DBEntity<CupcakeComponent>> cupcakes = cupcakeMapper.getAll();
 
             HttpSession session = request.getSession();
@@ -37,7 +31,8 @@ public class CupcakesPageCommand extends UnprotectedPageCommand
             return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes");
 
 
-        } catch (DatabaseException ex) {
+        }
+        catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all cupcakes!");
             return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes");
         }
