@@ -106,7 +106,52 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper
         }
         return dbOrderDetails;
     }
+    public List<DBEntity<OrderDetail>> insertOrderDetails(List<OrderDetail> orderDetails, int orderId) throws DatabaseException
+    {
+        Logger.getLogger("web").log(Level.INFO, "");
 
+        OrderDetail orderDetail;
+        List<DBEntity<OrderDetail>> dbOrderDetails = new ArrayList<>();
+        String sql = "insert into `orderdetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
+
+        try (Connection connection = connectionPool.getConnection())
+        {
+            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS))
+            {
+                for (OrderDetail od : orderDetails)
+                {
+                    orderDetail = od;
+
+                    ps.setInt(1, orderId);
+                    ps.setInt(2, orderDetail.getQuantity());
+                    ps.setInt(3, orderDetail.getToppingId());
+                    ps.setInt(4, orderDetail.getBottomId());
+                    ps.setString(5, orderDetail.getComments());
+
+                    ps.addBatch();
+                }
+
+                ps.executeBatch();
+                ResultSet rs = ps.getGeneratedKeys();
+
+                int currentIndex = 0;
+                while (rs.next())
+                {
+                    int newId = rs.getInt(1);
+                    DBEntity<OrderDetail> od = new DBEntity<>(newId,orderDetails.get(currentIndex));
+                    od.getEntity().setOrderId(orderId);
+                    dbOrderDetails.add(od);
+                    ++currentIndex;
+                }
+
+            }
+        }
+        catch (SQLException ex)
+        {
+            throw new DatabaseException(ex, "Could not insert the orderdetails into database");
+        }
+        return dbOrderDetails;
+    }
 
     @Override
     public List<DBEntity<Order>> getAll() throws DatabaseException

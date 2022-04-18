@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InsertOrderCommand extends UnprotectedPageCommand
@@ -34,14 +35,22 @@ public class InsertOrderCommand extends UnprotectedPageCommand
         }
 
         List<CartItem> cart = (List<CartItem>) request.getAttribute("cart");
-        for (CartItem item: cart) {
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        OrderDetail orderDetail;
 
-        }
 
         try{
             Order order = new Order(userId,requestedDelivery);
             order.setIsPaid(isPaid);
-            orderMapper.insert(order);
+            DBEntity<Order> dbOrder = orderMapper.insert(order);
+
+            for (CartItem item: cart) {
+                orderDetail = new OrderDetail(item.getTopping().getId(),item.getBottom().getId(), item.getQuantity(), dbOrder.getId(), item.getComments());
+                orderDetails.add(orderDetail);
+            }
+            //dbOrder.getEntity().setOrderDetails(orderDetails);
+            List<DBEntity<OrderDetail>> odInDB= orderMapper.insertOrderDetails(orderDetails, dbOrder.getId());
+
 
             return new PageDirect(RedirectType.DEFAULT_REDIRECT, "receipt");
 

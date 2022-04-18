@@ -4,12 +4,12 @@ import java.util.Objects;
 
 public class CartItem
 {
-    private final CupcakeComponent topping;
-    private final CupcakeComponent bottom;
+    private final DBEntity<CupcakeComponent> topping;
+    private final DBEntity<CupcakeComponent> bottom;
     private int quantity;
     private final String comments;
 
-    public CartItem(CupcakeComponent topping, CupcakeComponent buttom, int quantity, String comments)
+    public CartItem(DBEntity<CupcakeComponent> topping, DBEntity<CupcakeComponent> buttom, int quantity, String comments)
     {
         this.topping = topping;
         this.bottom = buttom;
@@ -18,12 +18,12 @@ public class CartItem
     }
 
 
-    public CupcakeComponent getTopping()
+    public DBEntity<CupcakeComponent> getTopping()
     {
         return topping;
     }
 
-    public CupcakeComponent getBottom()
+    public DBEntity<CupcakeComponent> getBottom()
     {
         return bottom;
     }
@@ -44,7 +44,7 @@ public class CartItem
     }
 
     public int getTotalPrice(){
-        return quantity * (topping.getComponentPrice() + bottom.getComponentPrice());
+        return quantity * (topping.getEntity().getComponentPrice() + bottom.getEntity().getComponentPrice());
     }
 
     @Override
