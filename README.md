@@ -15,6 +15,12 @@ Michael og Nicolai - Standard tests kørt og UserMapper og Cupcake...Mapper næs
 **Fredag den 9. april 2022**: \
 Michael og Nicolai - Skift til en 'enkelt' servlet og command pattern.
 
+**Mandag den 11. april 2022**: \
+Michael og Nicolai - merget command pattern ind paa main, og noget clean up
+
+**Tirsdag den 11. april 2022**: \
+Michael - arbejde paa commands
+
 ## Baggrund
 Vi har landet en vigtig opgave fra Olsker Cupcakes. Det er endnu et dybdeøkologisk iværksættereventyr fra Bornholm, som har ramt den helt rigtige opskrift. Et par hipstere fra København har været forbi bageriet, og indsamlet nogle krav og lavet en halvfærdig mockup af en tænkt forside. En mockup er en meget løs skitse, som viser hvordan det færdige website skal se ud. Det er selvfølgelig ikke alt som er med, og som er tænkt igennem, så det er vores opgave at stille spørgsmål til manglende funktionalitet, komme med forslag osv.
 
@@ -23,13 +29,13 @@ Når man som leverandør skal løse sådan en opgave, er det godt at dele opgave
 ## Userstories (funktionelle krav)
 Det første kundemøde mundede ud i en række såkaldte user-stories. De beskriver på kort form hvilke brugere, som har hvilke behov og hvad de ønsker at opnå. Det kan godt være at der dukker flere user-stories op undervejs i processen, eller I vælger at stryge nogle af dem:
 
-US-1: Som kunde kan jeg bestille og betale cupcakes med en valgfri bund og top, sådan at jeg senere kan køre forbi butikken i Olsker og hente min ordre.
+US-1: Som kunde kan jeg bestille og betale cupcakes med en valgfri bund og top, sådan at jeg senere kan køre forbi butikken i Olsker og hente min ordre. `DONE`
 
-US-2 Som kunde kan jeg oprette en konto/profil for at kunne betale og gemme en en ordre.
+US-2 Som kunde kan jeg oprette en konto/profil for at kunne betale og gemme en en ordre. `WIP`
 
-US-3: Som administrator kan jeg indsætte beløb på en kundes konto direkte i MySql, så en kunde kan betale for sine ordrer.
+US-3: Som administrator kan jeg indsætte beløb på en kundes konto direkte i MySql, så en kunde kan betale for sine ordrer. `DONE`
 
-US-4: Som kunde kan jeg se mine valgte ordrelinier i en indkøbskurv, så jeg kan se den samlede pris.
+US-4: Som kunde kan jeg se mine valgte ordrelinier i en indkøbskurv, så jeg kan se den samlede pris. `DONE`
 
 US-5: Som kunde eller administrator kan jeg logge på systemet med email og kodeord. Når jeg er logget på, skal jeg kunne se min email på hver side (evt. i topmenuen, som vist på mockup’en). `DONE`
 
@@ -60,3 +66,46 @@ I skal også indsætte et link i rapporten til en kort video-demo af jeres færd
 ## MVC arkitektur
 
 ![MVC arkitektur](documentation/mvc.jpg)
+
+
+## temp notes on completed commands
+
+UserMapper:
+ - Login
+ - Logout
+ - Register(insert)
+ - Get all users
+ - Update
+ - find by id `MISSING`
+
+CupcakeMapper:
+ - Insert
+ - Get all `Works, can't get as a list on admin page`
+ - Get selection (top, bottom or all) `MISSING`
+ - Update 
+
+OrderMapper:
+ - Insert
+ - Get all
+ - Find by userID `MISSING`
+ - Update
+
+## temp notes on which commands are used
+
+UserMapper:
+- Login
+- Logout
+- Register(insert)
+- Get all users
+- Update
+
+CupcakeMapper:
+- Insert
+- Get all
+- Update
+
+OrderMapper:
+- Insert `MISSING`
+- Get all 
+- Update
+

@@ -1,4 +1,4 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.pages;
 
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
@@ -7,11 +7,10 @@ import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-public class LogoutCommand extends UnprotectedPageCommand
+public class UnprotectedPageCommand extends PageCommand
 {
-    public LogoutCommand(String pageName)
+    public UnprotectedPageCommand(String pageName)
     {
         super(pageName);
     }
@@ -19,10 +18,6 @@ public class LogoutCommand extends UnprotectedPageCommand
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
-        HttpSession session = request.getSession(false);
-        if(session != null){
-            session.invalidate();
-        }
-        return new PageDirect(RedirectType.REDIRECT, request.getContextPath());
+        return new PageDirect(RedirectType.DEFAULT, getPageName());
     }
 }

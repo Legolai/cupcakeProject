@@ -1,32 +1,29 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.actions;
 
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.UnprotectedPageCommand;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
-import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-public class ProtectedPageCommand extends PageCommand
+public class LogoutCommand extends UnprotectedPageCommand
 {
-    private final Role role;
-
-    public ProtectedPageCommand(String pageName, Role role)
+    public LogoutCommand(String pageName)
     {
         super(pageName);
-        this.role = role;
     }
 
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
     {
-        return new PageDirect(RedirectType.DEFAULT, getPageName());
-    }
-
-    public Role getRole()
-    {
-        return role;
+        HttpSession session = request.getSession(false);
+        if(session != null){
+            session.invalidate();
+        }
+        return new PageDirect(RedirectType.REDIRECT, request.getContextPath());
     }
 }

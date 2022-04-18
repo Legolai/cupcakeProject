@@ -1,5 +1,6 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.actions;
 
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.UnprotectedPageCommand;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
@@ -33,7 +34,7 @@ public class RegisterCommand extends UnprotectedPageCommand
 
         if(!password.equals(confirmedPassword)){
             request.setAttribute("error", "Confirmed password does not match!");
-            return new PageDirect(RedirectType.DEFAULT, "createAccount-page");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "createAccount-page");
         }
 
         try{
@@ -44,7 +45,7 @@ public class RegisterCommand extends UnprotectedPageCommand
 
             session.setAttribute("user", dbUser);
 
-            return new PageDirect(RedirectType.DEFAULT, "account-page");
+            return new PageDirect(RedirectType.DEFAULT, "index");
 
 
         } catch (DatabaseException ex) {

@@ -1,8 +1,10 @@
-package dk.cphbusiness.dat.cupcakeproject.control.commands;
+package dk.cphbusiness.dat.cupcakeproject.control.commands.actions;
 
+import dk.cphbusiness.dat.cupcakeproject.control.commands.pages.ProtectedPageCommand;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
+import dk.cphbusiness.dat.cupcakeproject.model.entities.Role;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.User;
 import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
@@ -11,12 +13,13 @@ import dk.cphbusiness.dat.cupcakeproject.model.persistence.UserMapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
-public class LoginCommand extends UnprotectedPageCommand
+public class GetAllUsersCommand extends ProtectedPageCommand
 {
-    public LoginCommand(String pageName)
+    public GetAllUsersCommand(String pageName)
     {
-        super(pageName);
+        super(pageName, Role.ADMIN);
     }
 
     @Override
@@ -24,22 +27,21 @@ public class LoginCommand extends UnprotectedPageCommand
     {
         UserMapper userMapper = new UserMapper(connectionPool);
 
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
 
-        try {
-            DBEntity<User> dbUser = userMapper.login(email, password);
+        try{
+            List<DBEntity<User>> users = userMapper.getAll();
 
             HttpSession session = request.getSession();
-            session.setAttribute("user", dbUser);
 
-            String pageToShow = "account-page";
-            return new PageDirect(RedirectType.REDIRECT, pageToShow);
+            session.setAttribute("allUsers", users);
+
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+
+
+        } catch (DatabaseException ex) {
+            request.setAttribute("error", "Could not get all users!");
+            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
         }
-        catch (DatabaseException ex)
-        {
-            request.setAttribute("error", "Wrong username or password!");
-            return new PageDirect(RedirectType.DEFAULT, "login-page");
-        }
+
     }
 }

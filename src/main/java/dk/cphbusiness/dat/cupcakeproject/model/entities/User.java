@@ -38,6 +38,10 @@ public class User
         this.account = account;
     }
 
+    public User(User that){
+        this(that.getName(), that.getEmail(), that.getPhone(), that.getPassword(), that.getRole(), that.getAddress(), that.getAccount());
+    }
+
 
     public String getName()
     {

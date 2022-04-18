@@ -20,21 +20,17 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @WebServlet(name = "FrontController", urlPatterns = {"/fc/*"})
-public class FrontControllerServlet extends HttpServlet
-{
+public class FrontControllerServlet extends HttpServlet {
 
     private static ConnectionPool connectionPool;
 
     @Override
-    public void init() throws ServletException
-    {
+    public void init() throws ServletException {
         connectionPool = ApplicationStart.getConnectionPool();
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
-        try
-        {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
             request.setCharacterEncoding("UTF-8");
             response.setCharacterEncoding("UTF-8");
             Command action = CommandController.getInstance().fromPath(request);
@@ -55,14 +51,12 @@ public class FrontControllerServlet extends HttpServlet
 
             request.getRequestDispatcher("/WEB-INF/" + view.pageName + ".jsp").forward(request, response);
         }
-        catch (UnsupportedEncodingException | DatabaseException ex)
-        {
+        catch (UnsupportedEncodingException | DatabaseException ex) {
             request.setAttribute("errormessage", ex.getMessage());
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
-        catch (Exception ex)
-        {
+        catch (Exception ex) {
             request.setAttribute("errormessage", ex.getMessage());
             Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
             request.getRequestDispatcher("/error.jsp").forward(request, response);
@@ -70,20 +64,17 @@ public class FrontControllerServlet extends HttpServlet
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
-    {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
 
     @Override
-    public String getServletInfo()
-    {
+    public String getServletInfo() {
         return "FrontController for application";
     }
 
