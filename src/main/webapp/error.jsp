@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page errorPage="error.jsp" isErrorPage="false" %>
+<%@page errorPage="error.jsp" %>
 
 <t:pagetemplate>
     <jsp:attribute name="header">
@@ -15,7 +15,7 @@
 
     <jsp:body>
 
-        <p>An error has occured. This is the best message we can come up
+        <p>An error has occurred. This is the best message we can come up
             with right now: </p>
 
         <c:if test="${pageContext.errorData.statusCode == 404 }">

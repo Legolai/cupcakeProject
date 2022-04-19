@@ -5,7 +5,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 
 public abstract class DataMapper<T> implements IDataMapper<T>
 {
-    protected ConnectionPool connectionPool;
+    protected final ConnectionPool connectionPool;
 
     protected DataMapper(ConnectionPool connectionPool)
     {

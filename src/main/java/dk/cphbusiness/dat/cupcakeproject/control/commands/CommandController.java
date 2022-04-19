@@ -31,7 +31,7 @@ public class CommandController
         commands.put("login-command", new LoginCommand(""));
         commands.put("logout-command", new LogoutCommand(""));
         commands.put("register-command", new RegisterCommand(""));
-        commands.put("addToCart-command", new AddToCartCommaned("cupcakes"));
+        commands.put("addToCart-command", new AddToCartCommand("cupcakes"));
         commands.put("removeFromCart-command", new RemoveFromCartCommand("cart"));
         commands.put("getAllUsers-command", new GetAllUsersCommand(""));
         commands.put("updateUser-command", new UpdateUserCommand(""));

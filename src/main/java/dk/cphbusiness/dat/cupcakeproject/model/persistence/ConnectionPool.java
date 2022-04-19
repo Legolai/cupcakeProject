@@ -13,20 +13,20 @@ import java.util.logging.Logger;
 
 public class ConnectionPool {
     private HikariDataSource ds;
-    private static String user = "root";
-    private static String password = "root";
-    private static String url = "jdbc:mysql://localhost:3306/%s";
+    private static final String USER = "root";
+    private static final String PASSWORD = "root";
+    private static final String URL = "jdbc:mysql://localhost:3306/%s";
 
 
     public ConnectionPool() {
-        this(user, password, url);
+        this(USER, PASSWORD, URL);
     }
 
     public ConnectionPool(DBType dbType) {
         String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath().replace("%20", " ");
         String appConfigPath = rootPath + "app.properties";
         Properties appProps = new Properties();
-        FileInputStream file = null;
+        FileInputStream file;
         try {
             file = new FileInputStream(appConfigPath);
             appProps.load(file);
@@ -37,7 +37,7 @@ public class ConnectionPool {
         String propUser = appProps.getProperty("USERNAME");
         String propPassword = appProps.getProperty("PASSWORD");
         String propDbName = dbType.equals(DBType.TEST) ? appProps.getProperty("TEST_DB") : appProps.getProperty("DB");
-        String propDbUrl = String.format(url, propDbName);
+        String propDbUrl = String.format(URL, propDbName);
 
         setupConnection(propUser, propPassword, propDbUrl);
     }

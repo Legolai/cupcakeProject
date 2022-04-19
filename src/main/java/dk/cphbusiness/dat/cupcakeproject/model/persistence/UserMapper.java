@@ -91,7 +91,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     @Override
     public Optional<DBEntity<User>> findById(int id) throws DatabaseException
     {
-        Optional<DBEntity<User>> optionalDBEntity = Optional.empty();
+        Optional<DBEntity<User>> optionalDBEntity;
         Logger.getLogger("web").log(Level.INFO, "");
 
         String sql = "SELECT * FROM User WHERE userID = ?";
@@ -169,7 +169,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
     {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        DBEntity<User> userEntity = null;
+        DBEntity<User> userEntity;
 
         String sql = "SELECT * FROM User WHERE email = ? AND password = ?";
 

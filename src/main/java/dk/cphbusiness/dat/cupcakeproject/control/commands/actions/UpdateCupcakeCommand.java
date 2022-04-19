@@ -20,7 +20,7 @@ public class UpdateCupcakeCommand extends ProtectedPageCommand {
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
 
         int id = Integer.parseInt(request.getParameter("updateCupcakeID"));

@@ -22,8 +22,7 @@ public class RegisterCommand extends UnprotectedPageCommand
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         UserMapper userMapper = new UserMapper(connectionPool);
 
         String name = request.getParameter("name");

@@ -90,7 +90,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
             }
         }
         catch (SQLException ex) {
-            throw new DatabaseException(ex, "Could not insert the orderdetails into database");
+            throw new DatabaseException(ex, "Could not insert the order-details into database");
         }
         return dbOrderDetails;
     }
@@ -131,7 +131,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
             }
         }
         catch (SQLException ex) {
-            throw new DatabaseException(ex, "Could not insert the orderdetails into database");
+            throw new DatabaseException(ex, "Could not insert the order-details into database");
         }
         return dbOrderDetails;
     }
@@ -192,7 +192,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
     public Optional<List<DBEntity<Order>>> findByUserId(int id) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        Optional<List<DBEntity<Order>>> optionalDBEntityList = Optional.empty();
+        Optional<List<DBEntity<Order>>> optionalDBEntityList;
         List<DBEntity<Order>> list = new ArrayList<>();
         String sql = "SELECT * FROM `order` WHERE userID = ?";
 

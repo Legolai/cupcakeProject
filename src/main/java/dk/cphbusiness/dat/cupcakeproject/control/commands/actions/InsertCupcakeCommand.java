@@ -19,7 +19,7 @@ public class InsertCupcakeCommand extends ProtectedPageCommand {
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
 
         String name = request.getParameter("newCupcakeName");

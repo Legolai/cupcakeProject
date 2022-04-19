@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page errorPage="../error.jsp" isErrorPage="false" %>
+<%@page errorPage="../error.jsp" %>
 <%@ page import="dk.cphbusiness.dat.cupcakeproject.model.entities.Role"%>
 
 <t:pagetemplate>
@@ -15,7 +15,7 @@
 
     <jsp:body>
 
-        <p>Startcode for 2nd semester </p>
+        <p>Start code for 2nd semester </p>
 
         <c:if test="${sessionScope.user != null}">
             <p>You are logged in with the role of."${sessionScope.user.getEntity().getRole()}"</p>

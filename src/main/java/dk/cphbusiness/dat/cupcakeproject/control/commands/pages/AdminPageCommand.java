@@ -22,8 +22,7 @@ public class AdminPageCommand extends ProtectedPageCommand
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         UserMapper userMapper = new UserMapper(connectionPool);
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);

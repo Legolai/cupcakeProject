@@ -20,7 +20,7 @@ public class GetAllCupcakesCommand extends UnprotectedPageCommand {
     }
 
     @Override       // can't get for a list on admin page
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
         String goToPage;
 

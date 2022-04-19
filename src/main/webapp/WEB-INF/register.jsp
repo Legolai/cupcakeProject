@@ -2,7 +2,7 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page errorPage="../error.jsp" isErrorPage="false" %>
+<%@page errorPage="../error.jsp" %>
 
 <t:pagetemplate>
     <jsp:attribute name="header">
@@ -24,8 +24,8 @@
             <input type="text" id="email" name="email"/>
             <label for="password">Kode ord: </label>
             <input type="password" id="password" name="password"/>
-            <label for="password">Gentag kode ord: </label>
-            <input type="confirmedPassword" id="confirmedPassword" name="confirmedPassword"/>
+            <label for="confirmedPassword">Gentag kode ord: </label>
+            <input type="password" id="confirmedPassword" name="confirmedPassword"/>
             <input type="submit"  value="Opret bruger"/>
         </form>
 

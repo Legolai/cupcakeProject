@@ -2,13 +2,13 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page errorPage="../error.jsp" isErrorPage="false" %>
+<%@page errorPage="../error.jsp" %>
 <%@ page import="dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponentType"%>
 
 
 <script>
     function toggleUserTable() {
-        var x = document.getElementById("userTable");
+        const x = document.getElementById("userTable");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -16,7 +16,7 @@
         }
     }
     function toggleOrderTable() {
-        var x = document.getElementById("orderTable");
+        const x = document.getElementById("orderTable");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -24,7 +24,7 @@
         }
     }
     function toggleCupcakeTable() {
-        var x = document.getElementById("cupcakeTable");
+        const x = document.getElementById("cupcakeTable");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -32,7 +32,7 @@
         }
     }
     function sortTable(n) {
-        var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+        let table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
         table = document.getElementById("myTable2");
         switching = true;
         // Set the sorting direction to ascending:
@@ -54,13 +54,13 @@
                 y = rows[i + 1].getElementsByTagName("TD")[n];
                 /* Check if the two rows should switch place,
                 based on the direction, asc or desc: */
-                if (dir == "asc") {
+                if (dir === "asc") {
                     if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
                         break;
                     }
-                } else if (dir == "desc") {
+                } else if (dir === "desc") {
                     if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
                         // If so, mark as a switch and break the loop:
                         shouldSwitch = true;
@@ -78,7 +78,7 @@
             } else {
                 /* If no switching has been done AND the direction is "asc",
                 set the direction to "desc" and run the while loop again. */
-                if (switchcount == 0 && dir == "asc") {
+                if (switchcount === 0 && dir === "asc") {
                     dir = "desc";
                     switching = true;
                 }
@@ -189,7 +189,7 @@
       </div>
 
       <br><br>
-    <h3>Insæt ny cupcake</h3>
+    <h3>Indsæt ny cupcake</h3>
       <form action="${pageContext.request.contextPath}/fc/insertCupcake-command" method="post">
           <label for="newCupcakeName">Navn: </label>
           <input type="text" id="newCupcakeName" name="newCupcakeName"/>

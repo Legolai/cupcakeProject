@@ -26,8 +26,7 @@ public class CheckOutCommand extends UnprotectedPageCommand
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
 
         HttpSession session = request.getSession(false);

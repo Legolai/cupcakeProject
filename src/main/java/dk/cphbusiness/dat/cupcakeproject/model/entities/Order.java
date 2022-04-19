@@ -8,7 +8,7 @@ public class Order
 {
     private final int userId;
     private LocalDateTime created;
-    private LocalDateTime requestedDelivery;
+    private final LocalDateTime requestedDelivery;
     private LocalDateTime shipped;
     private List<DBEntity<OrderDetail>> orderDetails;
     private boolean isPaid;

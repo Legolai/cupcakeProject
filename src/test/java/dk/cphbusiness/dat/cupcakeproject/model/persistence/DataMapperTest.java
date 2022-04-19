@@ -11,8 +11,7 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public abstract class DataMapperTest<T> implements IDataMapperTest<T>
-{
+public abstract class DataMapperTest<T> implements IDataMapperTest<T> {
     protected static ConnectionPool connectionPool;
 
 
@@ -22,10 +21,9 @@ public abstract class DataMapperTest<T> implements IDataMapperTest<T>
     }
 
     @BeforeEach
-    void setUp()
-    {
+    void setUp() {
         try (Connection testConnection = connectionPool.getConnection()) {
-            try (Statement stmt = testConnection.createStatement() ) {
+            try (Statement stmt = testConnection.createStatement()) {
                 // Remove all rows from all tables
                 stmt.execute("delete from `OrderDetail`");
                 stmt.execute("delete from `CupcakeBottom`");
@@ -48,7 +46,7 @@ public abstract class DataMapperTest<T> implements IDataMapperTest<T>
                 stmt.execute("ALTER TABLE `CupcakeTopping` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `CupcakeTopping` AUTO_INCREMENT = 1");
                 stmt.execute("insert into `CupcakeTopping` (`toppingName`, `price`) " +
-                        "values ('Chocolate', 5),('Blueberry', 5), ('Rasberry', 5)");
+                        "values ('Chocolate', 5),('Blueberry', 5), ('Raspberry', 5)");
                 stmt.execute("ALTER TABLE `CupcakeTopping` ENABLE KEYS");
 
 
@@ -66,19 +64,18 @@ public abstract class DataMapperTest<T> implements IDataMapperTest<T>
                 stmt.execute("ALTER TABLE `OrderDetail` ENABLE KEYS");
 
             }
-        } catch (SQLException throwables) {
-            System.out.println(throwables.getMessage());
+        }
+        catch (SQLException throwable) {
+            System.out.println(throwable.getMessage());
             fail("Database connection failed");
         }
     }
 
     @Test
-    void testConnection() throws SQLException
-    {
+    void testConnection() throws SQLException {
         Connection connection = connectionPool.getConnection();
         assertNotNull(connection);
-        if (connection != null)
-        {
+        if (connection != null) {
             connection.close();
         }
     }

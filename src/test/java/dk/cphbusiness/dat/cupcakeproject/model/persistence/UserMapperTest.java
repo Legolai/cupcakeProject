@@ -31,13 +31,13 @@ class UserMapperTest extends DataMapperTest<User>
     }
 
     @Test
-    void invalidPasswordLogin() throws DatabaseException
+    void invalidPasswordLogin()
     {
         assertThrows(DatabaseException.class, () -> userMapper.login("user","123"));
     }
 
     @Test
-    void invalidUserNameLogin() throws DatabaseException
+    void invalidUserNameLogin()
     {
         assertThrows(DatabaseException.class, () -> userMapper.login("bob","1234"));
     }

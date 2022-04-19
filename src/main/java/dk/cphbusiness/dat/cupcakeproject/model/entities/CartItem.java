@@ -9,10 +9,10 @@ public class CartItem
     private int quantity;
     private final String comments;
 
-    public CartItem(DBEntity<CupcakeComponent> topping, DBEntity<CupcakeComponent> buttom, int quantity, String comments)
+    public CartItem(DBEntity<CupcakeComponent> topping, DBEntity<CupcakeComponent> bottom, int quantity, String comments)
     {
         this.topping = topping;
-        this.bottom = buttom;
+        this.bottom = bottom;
         this.quantity = quantity;
         this.comments = comments;
     }

@@ -6,7 +6,6 @@ import dk.cphbusiness.dat.cupcakeproject.control.commands.UnknownCommand;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.control.webtypes.RedirectType;
 import dk.cphbusiness.dat.cupcakeproject.model.config.ApplicationStart;
-import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 
 import javax.servlet.ServletException;
@@ -15,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +23,7 @@ public class FrontControllerServlet extends HttpServlet {
     private static ConnectionPool connectionPool;
 
     @Override
-    public void init() throws ServletException {
+    public void init() {
         connectionPool = ApplicationStart.getConnectionPool();
     }
 
@@ -50,11 +48,6 @@ public class FrontControllerServlet extends HttpServlet {
             }
 
             request.getRequestDispatcher("/WEB-INF/" + view.pageName + ".jsp").forward(request, response);
-        }
-        catch (UnsupportedEncodingException | DatabaseException ex) {
-            request.setAttribute("errormessage", ex.getMessage());
-            Logger.getLogger("web").log(Level.SEVERE, ex.getMessage(), ex);
-            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
         catch (Exception ex) {
             request.setAttribute("errormessage", ex.getMessage());

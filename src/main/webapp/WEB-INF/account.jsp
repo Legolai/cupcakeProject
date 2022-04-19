@@ -7,7 +7,7 @@
 
 <script>
     function toggleForm() {
-        var x = document.getElementById("changeUserForm");
+        const x = document.getElementById("changeUserForm");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {
@@ -15,7 +15,7 @@
         }
     }
     function toggleOrderTable() {
-        var x = document.getElementById("orderTable");
+        const x = document.getElementById("orderTable");
         if (x.style.display === "none") {
             x.style.display = "block";
         } else {

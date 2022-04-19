@@ -5,7 +5,6 @@ import dk.cphbusiness.dat.cupcakeproject.control.webtypes.PageDirect;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.CartItem;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.CupcakeComponent;
 import dk.cphbusiness.dat.cupcakeproject.model.entities.DBEntity;
-import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 import dk.cphbusiness.dat.cupcakeproject.model.services.Cart;
 
@@ -15,16 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public class AddToCartCommaned extends UnprotectedPageCommand
+public class AddToCartCommand extends UnprotectedPageCommand
 {
-    public AddToCartCommaned(String pageName)
+    public AddToCartCommand(String pageName)
     {
         super(pageName);
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         ServletContext context = request.getServletContext();
         HttpSession session = request.getSession(false);
 

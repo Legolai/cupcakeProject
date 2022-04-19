@@ -42,11 +42,11 @@ public class ApplicationStart implements ServletContextListener
     public void contextDestroyed(ServletContextEvent sce)
     {
         Logger.getLogger("web").log(Level.INFO, "Shutting down application and connection pool");
-        unregisterJDBCdrivers();
+        unregisterJDBCDrivers();
         connectionPool.close();
     }
 
-    private void unregisterJDBCdrivers()
+    private void unregisterJDBCDrivers()
     {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
         // Loop through all drivers
@@ -59,17 +59,17 @@ public class ApplicationStart implements ServletContextListener
                 // This driver was registered by the webapp's ClassLoader, so deregister it:
                 try
                 {
-                    Logger.getLogger("web").log(Level.INFO, "Deregistering JDBC driver");
+                    Logger.getLogger("web").log(Level.INFO, "Unregistering JDBC driver");
                     DriverManager.deregisterDriver(driver);
                 }
                 catch (SQLException ex)
                 {
-                    Logger.getLogger("web").log(Level.SEVERE, "Error deregistering JDBC driver");
+                    Logger.getLogger("web").log(Level.SEVERE, "Error unregistering JDBC driver");
                 }
             } else
             {
                 // driver was not registered by the webapp's ClassLoader and may be in use elsewhere
-                Logger.getLogger("web").log(Level.WARNING, "Error deregistering JDBC driver");
+                Logger.getLogger("web").log(Level.WARNING, "Error unregistering JDBC driver");
             }
         }
     }

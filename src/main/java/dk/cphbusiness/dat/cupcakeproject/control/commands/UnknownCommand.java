@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 public class UnknownCommand implements Command
 {
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         String msg = "Unknown command. Contact IT";
         throw new DatabaseException(msg);
     }

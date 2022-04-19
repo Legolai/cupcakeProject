@@ -19,7 +19,7 @@ public class CupcakesPageCommand extends UnprotectedPageCommand {
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
 
         try {

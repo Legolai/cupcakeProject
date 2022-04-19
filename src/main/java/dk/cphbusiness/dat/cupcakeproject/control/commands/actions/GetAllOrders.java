@@ -23,8 +23,7 @@ public class GetAllOrders extends ProtectedPageCommand
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException
-    {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
 
         try{

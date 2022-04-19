@@ -16,7 +16,7 @@ Michael og Nicolai - Standard tests kørt og UserMapper og Cupcake...Mapper næs
 Michael og Nicolai - Skift til en 'enkelt' servlet og command pattern.
 
 **Mandag den 11. april 2022**: \
-Michael og Nicolai - merget command pattern ind paa main, og noget clean up
+Michael og Nicolai - merged command pattern ind paa main, og noget clean up
 
 **Tirsdag den 11. april 2022**: \
 Michael - arbejde paa commands
