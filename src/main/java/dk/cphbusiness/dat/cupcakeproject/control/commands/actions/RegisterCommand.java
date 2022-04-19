@@ -34,7 +34,7 @@ public class RegisterCommand extends UnprotectedPageCommand
 
         if(!password.equals(confirmedPassword)){
             request.setAttribute("error", "Confirmed password does not match!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "createAccount-page");
+            return new PageDirect(RedirectType.DEFAULT, "createAccount-page");
         }
 
         try{

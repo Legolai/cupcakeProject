@@ -35,7 +35,7 @@ public class CheckOutCommand extends UnprotectedPageCommand
         DBEntity<User> userDBEntity = (DBEntity<User>) session.getAttribute("user");
 
         if(userDBEntity == null){
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "register");
+            return new PageDirect(RedirectType.DEFAULT, "register");
         }
 
         LocalDateTime requestedDelivery = LocalDateTime.parse(request.getParameter("requestedDeliveryDate"));
@@ -52,11 +52,11 @@ public class CheckOutCommand extends UnprotectedPageCommand
 
             DBEntity<Order> dbOrder = orderMapper.insert(order);
             request.setAttribute("newOrder", dbOrder);
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
+            return new PageDirect(RedirectType.DEFAULT, "account");
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Failed to insert order");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "checkout");
+            return new PageDirect(RedirectType.DEFAULT, "checkout");
         }
 
     }

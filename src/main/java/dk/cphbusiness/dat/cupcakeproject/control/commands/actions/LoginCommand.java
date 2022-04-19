@@ -33,7 +33,6 @@ public class LoginCommand extends UnprotectedPageCommand {
 
             String pageToShow = "index";
             return new PageDirect(RedirectType.REDIRECT, pageToShow);
-            return new PageDirect(RedirectType.REDIRECT, pageToShow);
         }
         catch (DatabaseException ex) {
             request.setAttribute("error", "Wrong username or password!");

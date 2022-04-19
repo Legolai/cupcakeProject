@@ -30,13 +30,13 @@ public class InsertCupcakeCommand extends ProtectedPageCommand {
             CupcakeComponent cupcake = new CupcakeComponent(cupcakeType, name, price);
             cupcakeMapper.insert(cupcake);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
 
 
         }
         catch (DatabaseException ex) {
             request.setAttribute("error", "New cupcake component could not be inserted!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
         }
 
     }

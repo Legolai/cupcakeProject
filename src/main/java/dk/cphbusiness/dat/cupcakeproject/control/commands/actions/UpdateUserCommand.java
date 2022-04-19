@@ -46,6 +46,6 @@ public class UpdateUserCommand extends ProtectedPageCommand
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Update of user could not be completed");
         }
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+        return new PageDirect(RedirectType.DEFAULT, goToPage);
     }
 }

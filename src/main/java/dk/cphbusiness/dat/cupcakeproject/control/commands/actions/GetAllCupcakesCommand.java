@@ -40,13 +40,13 @@ public class GetAllCupcakesCommand extends UnprotectedPageCommand {
                 session.setAttribute("adminGetAllCupcakes", false);
             }
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+            return new PageDirect(RedirectType.DEFAULT, goToPage);
 
 
         }
         catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all cupcakes!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, goToPage);
+            return new PageDirect(RedirectType.DEFAULT, goToPage);
         }
     }
 }

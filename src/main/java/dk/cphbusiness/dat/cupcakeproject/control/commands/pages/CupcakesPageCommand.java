@@ -28,13 +28,13 @@ public class CupcakesPageCommand extends UnprotectedPageCommand {
             HttpSession session = request.getSession();
             session.setAttribute("cupcakes", cupcakes);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes");
+            return new PageDirect(RedirectType.DEFAULT, "cupcakes");
 
 
         }
         catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all cupcakes!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "cupcakes");
+            return new PageDirect(RedirectType.DEFAULT, "cupcakes");
         }
     }
 }

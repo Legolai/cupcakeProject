@@ -34,12 +34,12 @@ public class GetAllOrders extends ProtectedPageCommand
 
             session.setAttribute("allOrders", orders);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all orders!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
         }
 
     }

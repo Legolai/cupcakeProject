@@ -40,12 +40,12 @@ public class AdminPageCommand extends ProtectedPageCommand
             session.setAttribute("allOrders", orders);
             session.setAttribute("allCupcakes", cupcakes);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, getPageName());
+            return new PageDirect(RedirectType.DEFAULT, getPageName());
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all users!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, getPageName());
+            return new PageDirect(RedirectType.DEFAULT, getPageName());
         }
 
     }

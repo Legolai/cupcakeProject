@@ -34,10 +34,10 @@ public class AccountPageCommand extends ProtectedPageCommand
             Optional<List<DBEntity<Order>>> orders = orderMapper.findByUserId(user.getId());
             orders.ifPresent(dbEntities -> request.setAttribute("userOrders", dbEntities));
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
+            return new PageDirect(RedirectType.DEFAULT, "account");
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all your orders!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "account");
+            return new PageDirect(RedirectType.DEFAULT, "account");
         }
 
     }

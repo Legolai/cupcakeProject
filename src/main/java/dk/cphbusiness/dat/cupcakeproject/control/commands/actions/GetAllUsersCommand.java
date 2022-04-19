@@ -35,12 +35,12 @@ public class GetAllUsersCommand extends ProtectedPageCommand
 
             session.setAttribute("allUsers", users);
 
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
 
 
         } catch (DatabaseException ex) {
             request.setAttribute("error", "Could not get all users!");
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
         }
 
     }

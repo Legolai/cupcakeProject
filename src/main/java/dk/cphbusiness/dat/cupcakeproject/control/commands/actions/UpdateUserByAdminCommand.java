@@ -34,12 +34,12 @@ public class UpdateUserByAdminCommand extends ProtectedPageCommand {
             if (!userMapper.update(dbUser)) {
                 request.setAttribute("error", "Update of user could not be completed");
             }
-            return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+            return new PageDirect(RedirectType.DEFAULT, "admin");
         }
         catch (DatabaseException ex) {
             // not needed right?
         }   // should I repeat down here?
         request.setAttribute("error", "Update of user could not be completed");
-        return new PageDirect(RedirectType.DEFAULT_REDIRECT, "admin");
+        return new PageDirect(RedirectType.DEFAULT, "admin");
     }
 }
