@@ -1,0 +1,86 @@
+@startuml
+'https://plantuml.com/state-diagram
+
+Title Olsker Cupcake website
+
+
+
+State index.jsp
+State login.jsp
+State register.jsp
+State navigationbar
+
+
+[*] --> index.jsp
+index.jsp --> navigationbar
+note on link
+    The navigationbar is ALWAYS accessible
+end note
+navigationbar --> index.jsp
+
+index.jsp --> login.jsp
+note on link
+    login.jsp and register.jsp
+    also have access to the navigationbar
+    No arrows, because too messy
+end note
+index.jsp --> register.jsp
+
+login.jsp --> login.jsp: Log på [fejl]
+login.jsp --> LoggedOn: Log på [ok]
+register.jsp --> register.jsp: Registrer [fejl]
+register.jsp --> LoggedOn: Registrer [ok]
+
+navigationbar --> AlwaysAccessibleThroughNavigationBar
+navigationbar --> LoggedOnAsAdmin
+LoggedOnAsAdmin --> navigationbar
+
+
+AlwaysAccessibleThroughNavigationBar --> navigationbar
+
+State LoggedOn {
+    State account.jsp
+    [*] --> index.jsp: Bruger går til index når der logges ind
+    navigationbar --> account.jsp
+    account.jsp --> navigationbar
+
+    note bottom of account.jsp
+        This jsp is reachable
+        ONLY if the user has logged in
+    end note
+}
+
+note bottom of LoggedOnAsAdmin
+    This state is reachable
+    ONLY if the user has logged in
+    AND has the role Admin
+end note
+
+State LoggedOnAsAdmin {
+    State admin.jsp
+    [*] --> admin.jsp
+}
+
+
+note top of AlwaysAccessibleThroughNavigationBar
+    The 4 JSP in here can
+    always be accessed.
+    The index.jsp can also always
+    be accessed, and is
+    represented by "index"
+end note
+
+State AlwaysAccessibleThroughNavigationBar {
+    State index
+    State cucapkes.jsp
+    State kontakt.jsp
+    State omOs.jsp
+    State cart.jsp
+
+    index --> index.jsp
+    note bottom of omOs.jsp
+        The JSPs in here such as omOs.jsp can go to other JSPs through the navigationbar
+    end note
+}
+
+@enduml
