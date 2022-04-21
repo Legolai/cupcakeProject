@@ -68,4 +68,8 @@ I skal også indsætte et link i rapporten til en kort video-demo af jeres færd
 ![MVC arkitektur](documentation/mvc.jpeg)
 
 ## Demo video
-![Demo video](documentation/demo.mov)
+![Demo video](https://user-images.githubusercontent.com/59566404/164421628-b9c223a2-d6db-44e2-82bc-1247ee6fa4ba.mov)
+
+## Rapport
+https://docs.google.com/document/d/1ev3DXhHcrOZqjhZyEAFGdub49hmrA8dqR22d2amCukM/edit?usp=sharing
+
