@@ -21,7 +21,7 @@ public class UpdateOrderCommand extends ProtectedPageCommand {
     }
 
     @Override
-    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
+    public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) throws DatabaseException {
         OrderMapper orderMapper = new OrderMapper(connectionPool);
 
         Optional<DBEntity<Order>> orderFromDB = orderMapper.findById(Integer.parseInt(request.getParameter("updateOrderID")));

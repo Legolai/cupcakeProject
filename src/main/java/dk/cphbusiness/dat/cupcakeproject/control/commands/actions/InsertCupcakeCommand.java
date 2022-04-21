@@ -10,6 +10,7 @@ import dk.cphbusiness.dat.cupcakeproject.model.exceptions.DatabaseException;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.ConnectionPool;
 import dk.cphbusiness.dat.cupcakeproject.model.persistence.CupcakeComponentMapper;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -21,6 +22,7 @@ public class InsertCupcakeCommand extends ProtectedPageCommand {
     @Override
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         CupcakeComponentMapper cupcakeMapper = new CupcakeComponentMapper(connectionPool);
+        ServletContext context = request.getServletContext();
 
         String name = request.getParameter("newCupcakeName");
         int price = Integer.parseInt(request.getParameter("newCupcakePrice"));
@@ -29,7 +31,7 @@ public class InsertCupcakeCommand extends ProtectedPageCommand {
         try {
             CupcakeComponent cupcake = new CupcakeComponent(cupcakeType, name, price);
             cupcakeMapper.insert(cupcake);
-
+            context.setAttribute("cupcakeComponentUpdate", true);
             return new PageDirect(RedirectType.DEFAULT, "admin");
 
 

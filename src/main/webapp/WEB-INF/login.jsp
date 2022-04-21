@@ -18,6 +18,9 @@
         <h3>You can log in here</h3>
 
         <form action="${pageContext.request.contextPath}/fc/login-command" method="post">
+            <c:if test="${requestScope.error != null || !requestScope.equals('')}">
+                <span>${requestScope.error}</span>
+            </c:if>
             <label for="email">E-mail: </label>
             <input type="text" id="email" name="email"/>
             <label for="password">Password: </label>

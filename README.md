@@ -1,24 +1,24 @@
 ## Logbog
 
-**Mandag den 5. april 2022**: \
+**Mandag den 4. april 2022**: \
 Sammen - Setup af startkode til github repo og første version af database samt E/R diagram.
 
-**Tirsdag den 6. april 2022**: \
+**Tirsdag den 5. april 2022**: \
 Sammen - Mockup i figma og begyndelse på java kode i form af entities på baggrund E/R diagram for databasen.
 
-**Onsdag den 7. april 2022**: \
+**Onsdag den 6. april 2022**: \
 Michael og Nicolai - Basic test setup for IDataMapper og alle der implementer det. Lidt JSP og start på UserMapper.
 
-**Torsdag den 8. april 2022**: \
+**Torsdag den 7. april 2022**: \
 Michael og Nicolai - Standard tests kørt og UserMapper og Cupcake...Mapper næsten færdig, OrderMapper færdig senere i dag.
 
-**Fredag den 9. april 2022**: \
+**Fredag den 8. april 2022**: \
 Michael og Nicolai - Skift til en 'enkelt' servlet og command pattern.
 
 **Mandag den 11. april 2022**: \
 Michael og Nicolai - merged command pattern ind paa main, og noget clean up
 
-**Tirsdag den 11. april 2022**: \
+**Tirsdag den 12. april 2022**: \
 Michael - arbejde paa commands
 
 ## Baggrund
@@ -65,47 +65,11 @@ I skal også indsætte et link i rapporten til en kort video-demo af jeres færd
 
 ## MVC arkitektur
 
-![MVC arkitektur](documentation/mvc.jpg)
+![MVC arkitektur](documentation/mvc.jpeg)
 
+## Demo video
+![Demo video](https://user-images.githubusercontent.com/59566404/164421628-b9c223a2-d6db-44e2-82bc-1247ee6fa4ba.mov)
 
-## temp notes on completed commands
-
-UserMapper:
- - Login
- - Logout
- - Register(insert)
- - Get all users
- - Update
- - find by id `MISSING`
-
-CupcakeMapper:
- - Insert
- - Get all `Works, can't get as a list on admin page`
- - Get selection (top, bottom or all) `MISSING`
- - Update 
-
-OrderMapper:
- - Insert
- - Get all
- - Find by userID `MISSING`
- - Update
-
-## temp notes on which commands are used
-
-UserMapper:
-- Login
-- Logout
-- Register(insert)
-- Get all users
-- Update
-
-CupcakeMapper:
-- Insert
-- Get all
-- Update
-
-OrderMapper:
-- Insert `MISSING`
-- Get all 
-- Update
+## Rapport
+https://docs.google.com/document/d/1ev3DXhHcrOZqjhZyEAFGdub49hmrA8dqR22d2amCukM/edit?usp=sharing
 
