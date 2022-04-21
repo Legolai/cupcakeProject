@@ -112,8 +112,7 @@ public class User
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
+        if (!(o instanceof User user)) return false;
         return getName().equals(user.getName()) && getEmail().equals(user.getEmail()) && Objects.equals(getPhone(), user.getPhone()) && getPassword().equals(user.getPassword()) && getRole() == user.getRole() && Objects.equals(getAddress(), user.getAddress());
     }
 

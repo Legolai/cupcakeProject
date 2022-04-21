@@ -36,7 +36,7 @@ public class LoginCommand extends UnprotectedPageCommand {
         }
         catch (DatabaseException ex) {
             request.setAttribute("error", "Wrong username or password!");
-            return new PageDirect(RedirectType.DEFAULT, "login-page");
+            return new PageDirect(RedirectType.DEFAULT, "login");
         }
     }
 }

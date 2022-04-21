@@ -23,14 +23,12 @@ public class UpdateUserByAdminCommand extends ProtectedPageCommand {
     public PageDirect execute(HttpServletRequest request, HttpServletResponse response, ConnectionPool connectionPool) {
         UserMapper userMapper = new UserMapper(connectionPool);
 
-
-        Optional<DBEntity<User>> userFromDB = userMapper.findById(Integer.parseInt(request.getParameter("updateUserID")));
-        DBEntity<User> dbUser = userFromDB.orElseThrow();
-        int bal = dbUser.getEntity().getAccount().getBalance();
-        dbUser.getEntity().getAccount().withdraw(bal);
-        dbUser.getEntity().getAccount().deposit(Integer.parseInt(request.getParameter("updateUserBalance")));
-
         try {
+            Optional<DBEntity<User>> userFromDB = userMapper.findById(Integer.parseInt(request.getParameter("updateUserID")));
+            DBEntity<User> dbUser = userFromDB.orElseThrow();
+            int bal = dbUser.getEntity().getAccount().getBalance();
+            dbUser.getEntity().getAccount().withdraw(bal);
+            dbUser.getEntity().getAccount().deposit(Integer.parseInt(request.getParameter("updateUserBalance")));
             if (!userMapper.update(dbUser)) {
                 request.setAttribute("error", "Update of user could not be completed");
             }

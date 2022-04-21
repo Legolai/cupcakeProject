@@ -28,8 +28,7 @@ public class CupcakeComponent {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CupcakeComponent)) return false;
-        CupcakeComponent that = (CupcakeComponent) o;
+        if (!(o instanceof CupcakeComponent that)) return false;
         return getComponentPrice() == that.getComponentPrice() && getComponentType() == that.getComponentType() && getComponentName().equals(that.getComponentName());
     }
 

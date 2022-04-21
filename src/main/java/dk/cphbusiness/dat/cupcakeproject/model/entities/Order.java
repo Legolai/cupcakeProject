@@ -4,8 +4,7 @@ package dk.cphbusiness.dat.cupcakeproject.model.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Order
-{
+public class Order{
     private final int userId;
     private LocalDateTime created;
     private final LocalDateTime requestedDelivery;

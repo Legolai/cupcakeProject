@@ -41,8 +41,7 @@ public class DBEntity <T>
     public boolean equals(Object o)
     {
         if (this == o) return true;
-        if (!(o instanceof DBEntity)) return false;
-        DBEntity<?> dbEntity = (DBEntity<?>) o;
+        if (!(o instanceof DBEntity<?> dbEntity)) return false;
         return getId() == dbEntity.getId() && getEntity().equals(dbEntity.getEntity());
     }
 
