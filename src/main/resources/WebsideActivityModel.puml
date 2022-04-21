@@ -1,0 +1,43 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+
+Title Olsker Cupcake webside
+|Kunde|
+    start
+    :Gå til webside;
+
+|#AntiqueWhite|Webside|
+    repeat
+        :Indtast credentials;
+    repeat while (credentials true?) is (no)
+    -> yes;
+    :Log ind;
+
+|Kunde|
+    :Bestil cupcakes;
+    fork
+        |Kunde|
+        :Gå til kurv;
+        :Check ud;
+    fork again
+        |Webside|
+        :Tilføj til kurv;
+    end fork
+|Webside|
+    :Lav kvittering;
+    fork
+        |Kunde|
+        :Kvittering;
+        :Tag til butikken (f.eks. med bil);
+    fork again
+        |Butik|
+        :Bag cupcakes;
+        :Cupcakes er færdig;
+        :Pak cupcakes;
+    end fork
+|Butik|
+:Afhent kager;
+stop
+
+@enduml
