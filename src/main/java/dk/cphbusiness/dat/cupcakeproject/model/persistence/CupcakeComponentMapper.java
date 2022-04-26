@@ -58,11 +58,11 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
         String sql;
 
         if (selection.equals("toppings") || selection.equals("all")) {
-            sql = "SELECT * FROM cupcaketopping order by toppingName;";
+            sql = "SELECT * FROM CupcakeTopping order by toppingName;";
             cupcakeList.addAll(getToppingsOrBottoms(sql, CupcakeComponentType.TOPPING));
         }
         if (selection.equals("bottoms") || selection.equals("all")) {
-            sql = "SELECT * FROM cupcakebottom order by bottomName;";
+            sql = "SELECT * FROM CupcakeBottom order by bottomName;";
             cupcakeList.addAll(getToppingsOrBottoms(sql, CupcakeComponentType.BOTTOM));
         }
         return cupcakeList;
@@ -90,7 +90,8 @@ public class CupcakeComponentMapper extends DataMapper<CupcakeComponent> impleme
             }
         }
         catch (SQLException ex) {
-            throw new DatabaseException(ex, "Error cupcakes. Something went wrong with the database");
+            Logger.getLogger("server").log(Level.INFO, ex.getMessage());
+//            throw new DatabaseException(ex, "Error cupcakes. Something went wrong with the database");
         }
         return cupcakeList;
     }

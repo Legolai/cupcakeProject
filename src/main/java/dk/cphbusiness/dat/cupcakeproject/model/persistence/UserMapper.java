@@ -27,7 +27,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<User> dbUser;
-        String sql = "insert into user (name, email, phone, password, role, address, balance) values (?,?,?,?,?,?,?)";
+        String sql = "insert into `User` (name, email, phone, password, role, address, balance) values (?,?,?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection())
         {
@@ -69,7 +69,7 @@ public class UserMapper extends DataMapper<User> implements IUserMapper
 
         List<DBEntity<User>> userList = new ArrayList<>();
 
-        String sql = "SELECT * FROM User order by 'name';";
+        String sql = "SELECT * FROM `User` order by 'name';";
 
         try (Connection connection = connectionPool.getConnection())
         {

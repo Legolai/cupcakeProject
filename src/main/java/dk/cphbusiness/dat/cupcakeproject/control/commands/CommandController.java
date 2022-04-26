@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 
 public class CommandController
 {
-    private static CommandController instance = null;
+    private static volatile CommandController instance = null;
     private final Map<String, Command> commands = new HashMap<>();
 
     private CommandController(){
@@ -46,8 +46,12 @@ public class CommandController
 
     public static CommandController getInstance(){
         if (instance == null) {
-            Logger.getLogger("CommandController").log(Level.SEVERE, "Commands has been created");
-            instance = new CommandController();
+            synchronized (CommandController.class) {
+                if (instance == null) {
+                    Logger.getLogger("CommandController").log(Level.SEVERE, "Commands has been created");
+                    instance = new CommandController();
+                }
+            }
         }
         return instance;
     }

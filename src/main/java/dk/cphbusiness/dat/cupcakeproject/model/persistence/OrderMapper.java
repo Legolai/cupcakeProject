@@ -23,7 +23,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
         Logger.getLogger("web").log(Level.INFO, "");
 
         DBEntity<Order> dbOrder;
-        String sql = "insert into `order` (userID, created, requestedDelivery) values (?,?,?)";
+        String sql = "insert into `Order` (userID, created, requestedDelivery) values (?,?,?)";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -58,7 +58,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
         List<DBEntity<OrderDetail>> orderDetailList = order.getOrderDetails();
         OrderDetail orderDetail;
         List<DBEntity<OrderDetail>> dbOrderDetails = new ArrayList<>();
-        String sql = "insert into `orderdetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
+        String sql = "insert into `OrderDetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -100,7 +100,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
 
         OrderDetail orderDetail;
         List<DBEntity<OrderDetail>> dbOrderDetails = new ArrayList<>();
-        String sql = "insert into `orderdetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
+        String sql = "insert into `OrderDetail` (orderNumber, quantityOrdered, toppingID, bottomID, comments) values (?,?,?,?,?)";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -142,7 +142,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
 
         List<DBEntity<Order>> orderList = new ArrayList<>();
 
-        String sql = "SELECT * FROM `order` order by 'orderID';";
+        String sql = "SELECT * FROM `Order` order by 'orderID';";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -167,7 +167,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
 
         Optional<DBEntity<Order>> optionalDBEntity;
         DBEntity<Order> dbOrder;
-        String sql = "SELECT * FROM `order` WHERE orderID = ?";
+        String sql = "SELECT * FROM `Order` WHERE orderID = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -194,7 +194,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
 
         Optional<List<DBEntity<Order>>> optionalDBEntityList;
         List<DBEntity<Order>> list = new ArrayList<>();
-        String sql = "SELECT * FROM `order` WHERE userID = ?";
+        String sql = "SELECT * FROM `Order` WHERE userID = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -219,7 +219,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
         Logger.getLogger("web").log(Level.INFO, "");
 
         List<DBEntity<OrderDetail>> orderDetailEntityList = new ArrayList<>();
-        String sql = "SELECT * FROM orderdetail WHERE orderNumber = ?";
+        String sql = "SELECT * FROM OrderDetail WHERE orderNumber = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -254,7 +254,7 @@ public class OrderMapper extends DataMapper<Order> implements IOrderMapper {
     public boolean update(DBEntity<Order> t) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "UPDATE `order`" +
+        String sql = "UPDATE `Order`" +
                 " SET userID = ?, created = ?, requestedDelivery = ?, shipped = ?, paid = ?" +
                 " WHERE orderID = ?;";
 
